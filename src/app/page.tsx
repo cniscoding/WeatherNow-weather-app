@@ -1,6 +1,12 @@
 'use client'
+import { TiWeatherDownpour } from "react-icons/ti";
 import React, { useState } from 'react';
-
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import {
   Card,
   CardContent,
@@ -9,7 +15,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
 
 interface WeatherData {
   location: string;
@@ -93,7 +98,7 @@ const Home: React.FC = () => {
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
       {/* top container */}
-      <div className="border-2 p-2 rounded-xl flex p-4">
+      <div className="border-2 p-2 rounded-xl flex p-4 w-full items-center justify-center">
         <input
           type="text"
           className="search-input border-2"
@@ -112,73 +117,83 @@ const Home: React.FC = () => {
           </button>
         </div>
       </div>
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>{currentWeather.location}</CardTitle>
-          <CardDescription>{currentWeather.dateTime}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {/* <p>Card Content</p> */}
-        </CardContent>
-        <CardContent>
-          <div>
-            <div className="weather-info">
-              {/* <h2>{weatherData.location}</h2> */}
-              {/* <p>{weatherData.dateTime}</p> */}
-              <div className="weather-details">
-                <img src="weather-icon.png" alt="Weather Icon" />
-                <div className="temperature">
-                  <p>
-                    {currentWeather.temperature}°{isCelsius ? 'C' : 'F'}
-                  </p>
-                  <p>Feels like {currentWeather.feelsLike}°{isCelsius ? 'C' : 'F'}</p>
-                </div>
-                <p>{currentWeather.description}</p>
-              </div>
+      {/* current weather */}
+      <div>
 
+      </div>
+      <Card className="w-full flex flex-col items-center p-2">
+        <div className="border-2 w-full p-4 m-2">
+          <CardHeader>
+            <CardTitle>{currentWeather.location}</CardTitle>
+            <CardDescription>{currentWeather.dateTime}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div>
+              <div className="weather-info">
+                <div className="weather-details">
+                  {/* <img src="weather-icon.png" alt="Weather Icon" /> */}
+                  <TiWeatherDownpour size={'5em'} />
+                  <div className="temperature">
+                    <p>
+                      {currentWeather.temperature}°{isCelsius ? 'C' : 'F'}
+                    </p>
+                    <p>Feels like {currentWeather.feelsLike}°{isCelsius ? 'C' : 'F'}</p>
+                  </div>
+                  <p>{currentWeather.description}</p>
+                </div>
+
+              </div>
             </div>
-          </div>
-        </CardContent>
-        <CardContent className="flex flex-col">
-          <div>
+          </CardContent>
+        </div>
+        {/* hourly forecast */}
+        <CardContent className="w-full flex flex-col border-2 p-2">
+          <div className="border-2 p-4 m-2">
             <CardTitle>hourly forecast chart</CardTitle>
             <p>some type of graph here</p>
           </div>
-          <div>
+          {/* 8 day forecast */}
+          <div className="border-2 p-4 m-2">
             <CardTitle>8 day forecast</CardTitle>
-            <div className="forecast-container">
-              {currentWeather.forecast.map((day, index) => (
-                <div key={index} className={`forecast-item ${exposedDays[index] ? 'exposed' : ''}`} onClick={() => toggleDayExposure(index)}>
-                  <div>{day.date}</div>
-                  <div>
-                    <img src={day.image} alt="Forecast" />
-                    <div>
-                      High: {day.highTemperature}°C | Low: {day.lowTemperature}°C
-                    </div>
-                  </div>
-                  <div>{day.forecastType}</div>
-                  {exposedDays[index] && (
-                    <div className="detailed-info">
-                      <div className="weather-info">
-                        {/* Render detailed weather information here */}
-                        <div className="weather-details">
-                          <img src="weather-icon.png" alt="Weather Icon" />
-                          <div className="temperature">
-                            <p>
-                              {currentWeather.temperature}°{isCelsius ? 'C' : 'F'}
-                            </p>
-                            <p>Feels like {currentWeather.feelsLike}°{isCelsius ? 'C' : 'F'}</p>
+            <div className="forecast-container m-4">
+              <Accordion type="single" collapsible>
+                {currentWeather.forecast.map((day, index) => (
+                  <div key={index} className={`forecast-item ${exposedDays[index] ? 'exposed' : ''}`} onClick={() => toggleDayExposure(index)}>
+                    <AccordionItem value={`item-${index}`}>
+                      <AccordionTrigger>
+                        <div>{day.date}</div>
+                        <div>
+                          {/* <img src={day.image} alt="Forecast" /> */}
+                          <TiWeatherDownpour size={'5em'} />
+                          <div>
+                            High: {day.highTemperature}°C | Low: {day.lowTemperature}°C
                           </div>
-                          <p>{currentWeather.description}</p>
                         </div>
-
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div>{day.forecastType}</div>
+                        <div className="detailed-info">
+                          <div className="weather-info">
+                            {/* Render detailed weather information here */}
+                            <div className="weather-details">
+                              {/* <img src="weather-icon.png" alt="Weather Icon" /> */}
+                              {/* <TiWeatherDownpour size={'4em'} /> */}
+                              <div className="temperature">
+                                <p>
+                                  {currentWeather.temperature}°{isCelsius ? 'C' : 'F'}
+                                </p>
+                                <p>Feels like {currentWeather.feelsLike}°{isCelsius ? 'C' : 'F'}</p>
+                              </div>
+                              <p>{currentWeather.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </div>
+                ))}
+              </Accordion>
             </div>
-
           </div>
         </CardContent>
         <CardFooter>
