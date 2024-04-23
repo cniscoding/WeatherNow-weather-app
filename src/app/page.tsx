@@ -1,4 +1,5 @@
 'use client'
+import ChartComponent from '../components/features/Chart';
 import { TiWeatherDownpour } from "react-icons/ti";
 import React, { useState } from 'react';
 import {
@@ -150,7 +151,8 @@ const Home: React.FC = () => {
         <CardContent className="w-full flex flex-col border-2 p-2">
           <div className="border-2 p-4 m-2">
             <CardTitle>hourly forecast chart</CardTitle>
-            <p>some type of graph here</p>
+            {/* <p>some type of graph here</p> */}
+            <ChartComponent />
           </div>
           {/* 8 day forecast */}
           <div className="border-2 p-4 m-2">
