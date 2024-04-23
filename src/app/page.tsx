@@ -55,6 +55,27 @@ const Home: React.FC = () => {
         lowTemperature: 20,
         forecastType: 'Broken clouds',
       },
+      {
+        date: 'April 25, 2024',
+        image: 'forecast-image-3.png',
+        highTemperature: 10,
+        lowTemperature: 2,
+        forecastType: 'Broken clouds',
+      },
+      {
+        date: 'April 26, 2024',
+        image: 'forecast-image-3.png',
+        highTemperature: 10,
+        lowTemperature: 2,
+        forecastType: 'Broken clouds',
+      },
+      {
+        date: 'April 27, 2024',
+        image: 'forecast-image-3.png',
+        highTemperature: 10,
+        lowTemperature: 2,
+        forecastType: 'Broken clouds',
+      },
       // Add more forecast data for other days
     ],
   });
@@ -99,7 +120,7 @@ const Home: React.FC = () => {
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
       {/* top container */}
-      <div className="border-2 p-2 rounded-xl flex p-4 w-full items-center justify-center">
+      <div className="border-2 p-4 rounded-xl flex w-full items-center justify-center">
         <input
           type="text"
           className="search-input border-2"
@@ -118,26 +139,25 @@ const Home: React.FC = () => {
           </button>
         </div>
       </div>
-      {/* current weather */}
-      <div>
 
-      </div>
-      <Card className="w-full flex flex-col p-2">
-        <div className="border-2 p-4 m-2 flex items-center justify-center flex-col ">
+      {/* current weather */}
+      <Card className="w-full flex flex-col p-4 m-2">
+        <div className="flex items-center justify-center flex-col">
           {/* current weather container */}
-          <div className="border-2 m-2">
-            <CardHeader>
+          <div className="w-full px-8 py-2">
+          <div className="border-2 rounded-xl w-full">
+            <CardHeader className="flex flex-col justify-center items-center">
               <CardTitle>{currentWeather.location}</CardTitle>
               <CardDescription>{currentWeather.dateTime}</CardDescription>
             </CardHeader>
             <CardContent>
-              <div>
+              <div className="flex flex-col justify-center items-center">
                 <p>Feels like {currentWeather.feelsLike}°{isCelsius ? 'C' : 'F'}{'.'} {currentWeather.description}</p>
                 <div className="weather-info">
                   <div className="weather-details flex flex-row">
                     {/* <img src="weather-icon.png" alt="Weather Icon" /> */}
-                    <TiWeatherDownpour size={'5em'} />
-                    <div className="temperature flex items-center justify-center p-2 text-5xl">
+                    <TiWeatherDownpour className="text-5xl"  />
+                    <div className="temperature flex items-center justify-center p-2 text-4xl">
                       <p>
                         {currentWeather.temperature}°{isCelsius ? 'C' : 'F'}
                       </p>
@@ -150,46 +170,50 @@ const Home: React.FC = () => {
               </div>
             </CardContent>
           </div>
+          </div>
           {/* hourly forecast */}
-          <CardContent className="w-full flex flex-col border-2 p-2">
-            <div className="border-2 p-4 m-2">
+          <CardContent className="w-full flex flex-col">
+            <div className="border-2 rounded-xl p-4 m-2">
               <CardTitle>hourly forecast chart</CardTitle>
               {/* <p>some type of graph here</p> */}
               <ChartComponent />
             </div>
             {/* 8 day forecast */}
-            <div className="border-2 p-4 m-2">
-              <CardTitle>8 day forecast</CardTitle>
-              <div className="forecast-container m-4">
-                <Accordion type="single" collapsible>
+            <div className="border-2 rounded-xl p-4 m-2 ">
+              <CardTitle className="py-4">8 day forecast</CardTitle>
+              <div className="forecast-container grid grid-cols-1 md:flex md:justify-center">
+                {/* <Accordion type="single" collapsible className="flex flex-col md:flex-row"> */}
+                <Accordion type="single" collapsible className="flex flex-col sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                   {currentWeather.forecast.map((day, index) => (
                     <div key={index} className={`forecast-item ${exposedDays[index] ? 'exposed' : ''}`} onClick={() => toggleDayExposure(index)}>
                       <AccordionItem value={`item-${index}`}>
-                        <AccordionTrigger>
+                        <AccordionTrigger className="flex flex-col border-2 rounded-xl h-48 p-2">
                           <div>{day.date}</div>
-                          <div>
+                          <div className="flex flex-col justify-center items-center">
                             {/* <img src={day.image} alt="Forecast" /> */}
                             <TiWeatherDownpour size={'5em'} />
                             <div>
-                              High: {day.highTemperature}°C | Low: {day.lowTemperature}°C
+                              Low: {day.lowTemperature}°C | High: {day.highTemperature}°C
                             </div>
                           </div>
                         </AccordionTrigger>
-                        <AccordionContent>
-                          <div>{day.forecastType}</div>
-                          <div className="detailed-info">
-                            <div className="weather-info">
-                              {/* Render detailed weather information here */}
-                              <div className="weather-details">
-                                {/* <img src="weather-icon.png" alt="Weather Icon" /> */}
-                                {/* <TiWeatherDownpour size={'4em'} /> */}
-                                <div className="temperature">
-                                  <p>
-                                    {currentWeather.temperature}°{isCelsius ? 'C' : 'F'}
-                                  </p>
-                                  <p>Feels like {currentWeather.feelsLike}°{isCelsius ? 'C' : 'F'}</p>
+                        <AccordionContent className="flex flex-col justify-center items-center">
+                          <div>
+                            <div>{day.forecastType}</div>
+                            <div className="detailed-info">
+                              <div className="weather-info">
+                                {/* Render detailed weather information here */}
+                                <div className="weather-details">
+                                  {/* <img src="weather-icon.png" alt="Weather Icon" /> */}
+                                  {/* <TiWeatherDownpour size={'4em'} /> */}
+                                  <div className="temperature">
+                                    <p>
+                                      {currentWeather.temperature}°{isCelsius ? 'C' : 'F'}
+                                    </p>
+                                    <p>Feels like {currentWeather.feelsLike}°{isCelsius ? 'C' : 'F'}</p>
+                                  </div>
+                                  <p>{currentWeather.description}</p>
                                 </div>
-                                <p>{currentWeather.description}</p>
                               </div>
                             </div>
                           </div>
@@ -202,7 +226,7 @@ const Home: React.FC = () => {
             </div>
           </CardContent>
         </div>
-        <CardFooter>
+        <CardFooter className="">
           <p>something about the forecast</p>
         </CardFooter>
       </Card>
