@@ -13,12 +13,12 @@ const ChartComponent = () => {
 
     // Create a new chart instance
     const newChart = new Chart(ctx, {
-      type: 'bar',
+      type: 'line',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['1pm','2pm','3pm','4pm','5pm','6pm','7pm','8pm','9pm','10pm'],
         datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
+          label: 'Temperature',
+          data: [12, 19, 3, 5, 2, 3,9,10,11,15],
           borderWidth: 1
         }]
       },
@@ -27,7 +27,9 @@ const ChartComponent = () => {
           y: {
             beginAtZero: true
           }
-        }
+        },
+        responsive: true,
+        maintainAspectRatio:false,
       }
     });
 
