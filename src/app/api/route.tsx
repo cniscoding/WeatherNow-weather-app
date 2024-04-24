@@ -17,15 +17,21 @@ export default async function getWeatherData() {
     //     data
     //   }
     // };
-    return data
+    return {
+      data // Return the data as props
+    };
+    // return data
   } catch (error) {
     console.error('There was a problem with the fetch operation:', error);
 
+    // return {
+    //   props: {
+    //     data: null
+    //   }
+    // };
     return {
-      props: {
-        data: null
-      }
-    };
+      data : null
+    }
 
   }
 }

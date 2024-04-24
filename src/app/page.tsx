@@ -1,9 +1,10 @@
-'use client'
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import ChartComponent from '../components/features/Chart';
 import MainForecast from '../components/features/mainForecast';
 import ExpandForecast from '../components/features/expandForecast';
 import getWeatherData from '../app/api/route'
+
+
 
 // import { TiWeatherDownpour } from "react-icons/ti";
 // import React, { useState } from 'react';
@@ -242,11 +243,11 @@ import getWeatherData from '../app/api/route'
 
 // export default Home;
 
-
 interface HomeProps {
   isCelsius: boolean;
   exposedDays: boolean[];
   toggleDayExposure: (index: number) => void;
+  // data: any;
 }
 
 interface WeatherData {
@@ -268,11 +269,40 @@ interface ExpandForecastProps {
   currentWeather: any;
   exposedDays: boolean[];
   toggleDayExposure: (index: number) => void;
-  isCelsius: boolean; // Add this line
+  isCelsius: boolean;
 }
 
-const Home: React.FC<HomeProps> = ({ data, isCelsius, exposedDays, toggleDayExposure }) => {
-  const [currentWeather, setCurrentWeather] = useState<WeatherData>({
+// const lat = "49.16";
+// const lon = "-123.13";
+// const apiKey = process.env.OPENWEATHERMAP_API_KEY;
+// const data = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
+
+
+
+export default async function Home({ isCelsius, exposedDays, toggleDayExposure }: HomeProps) {
+
+
+const lat = "49.16";
+const lon = "-123.13";
+const apiKey = process.env.OPENWEATHERMAP_API_KEY;
+
+try {
+  const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  
+  const data = await response.json(); 
+  console.log("Fetched data:", data.city);
+  // return {
+  //   props: { currentWeather: data.city.name }
+  // };
+} catch (error) {
+  console.error('There was a problem with the fetch operation:', error);
+  return <div>Loading...</div>;
+}
+
+  const currentWeather: WeatherData = {
     location: 'New York',
     dateTime: new Date().toLocaleString(),
     temperature: 20,
@@ -315,7 +345,8 @@ const Home: React.FC<HomeProps> = ({ data, isCelsius, exposedDays, toggleDayExpo
         forecastType: 'Broken clouds',
       },
     ],
-  });
+  };
+
 
   return (
     <main className="w-[95%] container flex flex-col h-screen p-2 pb-16 pt-4">
@@ -334,6 +365,8 @@ const Home: React.FC<HomeProps> = ({ data, isCelsius, exposedDays, toggleDayExpo
     </main>
   );
 };
+
+
 
 // export async function getStaticProps() {
 //   const lat = "49.166592";
@@ -363,9 +396,7 @@ const Home: React.FC<HomeProps> = ({ data, isCelsius, exposedDays, toggleDayExpo
 //   }
 // }
 
-  const data = getWeatherData();
-  {data}
-  // console.log('this is getWeatherData', data)
 
 
-export default Home;
+
+// export default Home;
