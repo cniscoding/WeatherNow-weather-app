@@ -318,6 +318,9 @@ const Home: React.FC<HomeProps> = ({ isCelsius, exposedDays, toggleDayExposure }
 
   return (
     <main className="w-[95%] container flex flex-col h-screen p-2 pb-16 pt-4">
+      <div className="py-4">
+        some type of bar up here
+      </div>
       <div className="pb-4">
         <MainForecast currentWeather={currentWeather} isCelsius={isCelsius} />
       </div>
@@ -330,5 +333,33 @@ const Home: React.FC<HomeProps> = ({ isCelsius, exposedDays, toggleDayExposure }
     </main>
   );
 };
+
+export async function getStaticProps() {
+  const lat = "latitude"; // Replace with the actual latitude
+  const lon = "longitude"; // Replace with the actual longitude
+  const apiKey = "your_api_key"; // Replace with your actual API key
+
+  const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return {
+      props: {
+        data
+      }
+    };
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error);
+    return {
+      props: {
+        data: null
+      }
+    };
+  }
+}
 
 export default Home;
