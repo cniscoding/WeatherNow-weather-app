@@ -1,5 +1,9 @@
+'use client'
 import { useEffect } from 'react';
 import Chart from 'chart.js/auto'; // Import Chart.js with automatic package selection
+import {
+  CardTitle,
+} from "@/components/ui/card"
 
 const ChartComponent = () => {
   useEffect(() => {
@@ -15,10 +19,10 @@ const ChartComponent = () => {
     const newChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['1pm','2pm','3pm','4pm','5pm','6pm','7pm','8pm','9pm','10pm'],
+        labels: ['1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm'],
         datasets: [{
           label: 'Temperature',
-          data: [12, 19, 3, 5, 2, 3,9,10,11,15],
+          data: [12, 19, 3, 5, 2, 3, 9, 10, 11, 15],
           borderWidth: 1
         }]
       },
@@ -29,7 +33,7 @@ const ChartComponent = () => {
           }
         },
         responsive: true,
-        maintainAspectRatio:false,
+        maintainAspectRatio: false,
       }
     });
 
@@ -40,8 +44,11 @@ const ChartComponent = () => {
   }, []);
 
   return (
-    <div>
-      <canvas id="myChart"></canvas>
+    <div className="border-2 rounded-xl">
+      <CardTitle className="">24 Hour Forecast</CardTitle>
+      <div>
+        <canvas id="myChart"></canvas>
+      </div>
     </div>
   );
 };
