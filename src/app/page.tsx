@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import ChartComponent from '../components/features/Chart';
 import MainForecast from '../components/features/mainForecast';
 import ExpandForecast from '../components/features/expandForecast';
+import getWeatherData from '../app/api/route'
 
 // import { TiWeatherDownpour } from "react-icons/ti";
 // import React, { useState } from 'react';
@@ -270,7 +271,7 @@ interface ExpandForecastProps {
   isCelsius: boolean; // Add this line
 }
 
-const Home: React.FC<HomeProps> = ({ isCelsius, exposedDays, toggleDayExposure }) => {
+const Home: React.FC<HomeProps> = ({ data, isCelsius, exposedDays, toggleDayExposure }) => {
   const [currentWeather, setCurrentWeather] = useState<WeatherData>({
     location: 'New York',
     dateTime: new Date().toLocaleString(),
@@ -334,32 +335,37 @@ const Home: React.FC<HomeProps> = ({ isCelsius, exposedDays, toggleDayExposure }
   );
 };
 
-export async function getStaticProps() {
-  const lat = "latitude"; // Replace with the actual latitude
-  const lon = "longitude"; // Replace with the actual longitude
-  const apiKey = "your_api_key"; // Replace with your actual API key
+// export async function getStaticProps() {
+//   const lat = "49.166592";
+//   const lon = "-123.133568";
+//   const apiKey = process.env.OPENWEATHERMAP_API_KEY;
 
-  const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+//   const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
-  try {
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
-    return {
-      props: {
-        data
-      }
-    };
-  } catch (error) {
-    console.error('There was a problem with the fetch operation:', error);
-    return {
-      props: {
-        data: null
-      }
-    };
-  }
-}
+//   try {
+//     const response = await fetch(apiUrl);
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+//     const data = await response.json();
+//     return {
+//       props: {
+//         data
+//       }
+//     };
+//   } catch (error) {
+//     console.error('There was a problem with the fetch operation:', error);
+//     return {
+//       props: {
+//         data: null
+//       }
+//     };
+//   }
+// }
+
+  const data = getWeatherData();
+  {data}
+  // console.log('this is getWeatherData', data)
+
 
 export default Home;
