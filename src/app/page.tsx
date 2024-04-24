@@ -318,9 +318,15 @@ const Home: React.FC<HomeProps> = ({ isCelsius, exposedDays, toggleDayExposure }
 
   return (
     <main className="w-[95%] container flex flex-col h-screen p-2 pb-16 pt-4">
-      <MainForecast currentWeather={currentWeather} isCelsius={isCelsius} />
-      <ChartComponent />
-      <ExpandForecast currentWeather={currentWeather} exposedDays={exposedDays} toggleDayExposure={toggleDayExposure} isCelsius={isCelsius} />
+      <div className="pb-4">
+        <MainForecast currentWeather={currentWeather} isCelsius={isCelsius} />
+      </div>
+      <div className="pb-4">
+        <ChartComponent />
+      </div>
+      <div className="pb-4">
+        <ExpandForecast currentWeather={currentWeather} exposedDays={exposedDays} toggleDayExposure={toggleDayExposure} isCelsius={isCelsius} />
+      </div>
     </main>
   );
 };
