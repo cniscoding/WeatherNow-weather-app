@@ -18,7 +18,7 @@ interface ExpandForecastProps {
 const ExpandForecast: React.FC<ExpandForecastProps> = ({ currentWeather, exposedDays, toggleDayExposure, isCelsius }) => {
   return (
     <div className="border-2 rounded-xl">
-      <CardTitle className="">5 day forecast</CardTitle>
+      <CardTitle className="">8 day forecast</CardTitle>
       <CardDescription>timeframe dateNow - date(7days) {currentWeather.dateTime}</CardDescription>
       <div className="forecast-container grid grid-cols-1 md:flex md:justify-center">
         <Accordion type="single" collapsible className="flex flex-col sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -28,14 +28,17 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ currentWeather, exposed
                 <AccordionTrigger className="flex flex-col border-2 rounded-xl h-48">
                   <div>{day.date}</div>
                   <div className="flex flex-col justify-center items-center">
-                    <TiWeatherDownpour size={'5em'} />
+                    {/* <TiWeatherDownpour size={'5em'} /> */}
+                    <div className={`relative invert-0 dark:invert`}>
+                    <img
+                      // alt={day.weather.description.toString()}
+                      src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                      className="select-none"
+                    />
+                  </div>
                     <div>
                       Low: {roundTemperature(day.temp.min)}°C | High: {roundTemperature(day.temp.max)}°C
                     </div>
-                    {/* <div>
-                      Feels like
-                      Low: {day.feels_like.day}°C | High: {day.feels_like.night}°C
-                    </div> */}
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="flex flex-col justify-center items-center">

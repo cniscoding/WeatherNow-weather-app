@@ -1,8 +1,9 @@
 
 import React from 'react';
-import {roundTemperature} from '@/lib/utils'
+import { roundTemperature } from '@/lib/utils'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { TiWeatherDownpour } from 'react-icons/ti';
+import Image from 'next/image'
 
 
 interface MainForecastProps {
@@ -55,14 +56,22 @@ const MainForecast: React.FC<MainForecastProps> = ({ currentWeather, isCelsius }
             </CardHeader>
             <CardContent>
               <div className="flex flex-col justify-center items-center">
-                  <div className="weather-details flex flex-row">
-                    <TiWeatherDownpour className="text-5xl" />
-                    <div className="temperature flex items-center justify-center text-4xl">
-                      <p>
-                        {roundTemperature(currentWeather.current.temp)}°{isCelsius ? 'C' : 'F'}
-                      </p>
-                    </div>
+                <div className="weather-details flex flex-row">
+                  {/* <TiWeatherDownpour className="text-5xl" /> */}
+                  <div className={`relative invert-0 dark:invert`}>
+                    <img
+                      alt={currentWeather.current.weather[0].description.toString()}
+                      src={`https://openweathermap.org/img/wn/${currentWeather.current.weather[0].icon}@2x.png`}
+                      className="select-none"
+                    />
                   </div>
+                  {/* https://openweathermap.org/img/wn/09n@2x.png */}
+                  <div className="temperature flex items-center justify-center text-4xl">
+                    <p>
+                      {roundTemperature(currentWeather.current.temp)}°{isCelsius ? 'C' : 'F'}
+                    </p>
+                  </div>
+                </div>
                 <p>Feels like {roundTemperature(currentWeather.current.feels_like)}°{isCelsius ? 'C' : 'F'}{'.'}</p>
                 <p>{currentWeather.current.weather[0].description}</p>
                 <div className="weather-info">
