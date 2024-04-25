@@ -39,34 +39,26 @@ export default async function Home({ isCelsius, exposedDays, toggleDayExposure }
   const lon = "-123.13";
   const apiKey = process.env.OPENWEATHERMAP_API_KEY;
   const exclude = 'minutely';
+  const units = 'metric'
 
-  // const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
-  // const data = await response.json()
-  // console.log('data',data)
-  
   let data = {};
 
   try {
     // const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
     // use one call 3.0 instead
-    const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&appid=${apiKey}`);
+    const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&units=${units}&appid=${apiKey}`);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
 
-    // const data = await response.json();
     data = await response.json();
-    // console.log("Fetched data:", data.city.name);
 
-    // return {
-    //   props: { currentWeather: data.city.name }
-    // };
   } catch (error) {
     console.error('There was a problem with the fetch operation:', error);
     return <div>Loading...</div>;
   }
 
-  console.log('Data:', data);
+  // console.log('Data:', data);
 
   const currentWeather: WeatherData = {
     location: 'New York',
@@ -123,7 +115,7 @@ export default async function Home({ isCelsius, exposedDays, toggleDayExposure }
         <MainForecast currentWeather={data} />
       </div>
       <div className="pb-4">
-        <ChartComponent />
+        <ChartComponent currentWeather={data} />
       </div>
       <div className="pb-4">
         <ExpandForecast currentWeather={currentWeather} exposedDays={exposedDays} toggleDayExposure={toggleDayExposure} isCelsius={isCelsius} />
