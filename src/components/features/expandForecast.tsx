@@ -1,4 +1,5 @@
 'use client'
+import {roundTemperature} from '@/lib/utils'
 import React from 'react';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import {
@@ -29,7 +30,7 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ currentWeather, exposed
                   <div className="flex flex-col justify-center items-center">
                     <TiWeatherDownpour size={'5em'} />
                     <div>
-                      Low: {day.temp.min}°C | High: {day.temp.max}°C
+                      Low: {roundTemperature(day.temp.min)}°C | High: {roundTemperature(day.temp.max)}°C
                     </div>
                     {/* <div>
                       Feels like
@@ -47,7 +48,7 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ currentWeather, exposed
                             {/* <p>
                               {currentWeather.temperature}°{isCelsius ? 'C' : 'F'}
                             </p> */}
-                            <p>Feels like Low: {day.feels_like.day}°C | High: {day.feels_like.night}°{isCelsius ? 'C' : 'F'}</p>
+                            <p>Feels like Low: {roundTemperature(day.feels_like.day)}°C | High: {roundTemperature(day.feels_like.night)}°{isCelsius ? 'C' : 'F'}</p>
                           </div>
                           <p>{day.summary}</p>
                         </div>

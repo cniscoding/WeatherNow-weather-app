@@ -1,5 +1,6 @@
 
 import React from 'react';
+import {roundTemperature} from '@/lib/utils'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { TiWeatherDownpour } from 'react-icons/ti';
 
@@ -58,11 +59,11 @@ const MainForecast: React.FC<MainForecastProps> = ({ currentWeather, isCelsius }
                     <TiWeatherDownpour className="text-5xl" />
                     <div className="temperature flex items-center justify-center text-4xl">
                       <p>
-                        {currentWeather.current.temp}°{isCelsius ? 'C' : 'F'}
+                        {roundTemperature(currentWeather.current.temp)}°{isCelsius ? 'C' : 'F'}
                       </p>
                     </div>
                   </div>
-                <p>Feels like {currentWeather.current.feels_like}°{isCelsius ? 'C' : 'F'}{'.'}</p>
+                <p>Feels like {roundTemperature(currentWeather.current.feels_like)}°{isCelsius ? 'C' : 'F'}{'.'}</p>
                 <p>{currentWeather.current.weather[0].description}</p>
                 <div className="weather-info">
                 </div>
