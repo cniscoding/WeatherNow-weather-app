@@ -3,6 +3,7 @@ import ChartComponent from '../components/features/Chart';
 import MainForecast from '../components/features/mainForecast';
 import ExpandForecast from '../components/features/expandForecast';
 import getWeatherData from '../app/api/route'
+import NavBar from '../components/features/navBar'
 
 interface HomeProps {
   isCelsius: boolean;
@@ -109,7 +110,7 @@ export default async function Home({ isCelsius, exposedDays, toggleDayExposure }
   return (
     <main className="w-[95%] container flex flex-col h-screen p-2 pb-16 pt-4">
       <div className="py-4">
-        some type of bar up here
+        <NavBar />
       </div>
       <div className="pb-4">
         {/* <MainForecast currentWeather={currentWeather} isCelsius={isCelsius} /> */}
