@@ -38,6 +38,7 @@ export default async function Home({ isCelsius, exposedDays, toggleDayExposure }
   const lat = "49.16";
   const lon = "-123.13";
   const apiKey = process.env.OPENWEATHERMAP_API_KEY;
+  const exclude = 'minutely';
 
   // const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
   // const data = await response.json()
@@ -46,7 +47,9 @@ export default async function Home({ isCelsius, exposedDays, toggleDayExposure }
   let data = {};
 
   try {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
+    // const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
+    // use one call 3.0 instead
+    const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&appid=${apiKey}`);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
