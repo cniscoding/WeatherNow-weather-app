@@ -37,7 +37,7 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ currentWeather, exposed
                     />
                   </div>
                     <div>
-                      Low: {roundTemperature(day.temp.min)}°C | High: {roundTemperature(day.temp.max)}°C
+                      Low: {roundTemperature(day.temp.min)} °C | High: {roundTemperature(day.temp.max)} °C
                     </div>
                   </div>
                 </AccordionTrigger>
@@ -51,7 +51,7 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ currentWeather, exposed
                             {/* <p>
                               {currentWeather.temperature}°{isCelsius ? 'C' : 'F'}
                             </p> */}
-                            <p>Feels like Low: {roundTemperature(day.feels_like.day)}°C | High: {roundTemperature(day.feels_like.night)}°{isCelsius ? 'C' : 'F'}</p>
+                            <p>Feels like Low: {roundTemperature(day.feels_like.day)} °C | High: {roundTemperature(day.feels_like.night)}°{isCelsius ? 'C' : 'F'}</p>
                           </div>
                           <p>{day.summary}</p>
                         </div>

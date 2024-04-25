@@ -52,12 +52,10 @@ const MainForecast: React.FC<MainForecastProps> = ({ currentWeather, isCelsius }
             <CardHeader className="flex flex-col justify-center items-center">
               <CardTitle>{currentWeather.timezone}</CardTitle>
               <CardDescription>{currentWeather.daily[0].summary}</CardDescription>
-              {console.log('currentWeather', currentWeather)}
             </CardHeader>
             <CardContent>
               <div className="flex flex-col justify-center items-center">
                 <div className="weather-details flex flex-row">
-                  {/* <TiWeatherDownpour className="text-5xl" /> */}
                   <div className={`relative invert-0 dark:invert`}>
                     <img
                       alt={currentWeather.current.weather[0].description.toString()}
@@ -66,13 +64,11 @@ const MainForecast: React.FC<MainForecastProps> = ({ currentWeather, isCelsius }
                     />
                   </div>
                   {/* https://openweathermap.org/img/wn/09n@2x.png */}
-                  <div className="temperature flex items-center justify-center text-4xl">
-                    <p>
-                      {roundTemperature(currentWeather.current.temp)}°{isCelsius ? 'C' : 'F'}
-                    </p>
+                  <div className="temperature flex items-center justify-center flex-col">
+                    <CardTitle>{roundTemperature(currentWeather.current.temp)} °{isCelsius ? 'C' : 'F'}</CardTitle>
+                    <CardDescription>Feels like {roundTemperature(currentWeather.current.feels_like)} °{isCelsius ? 'C' : 'F'}{'.'}</CardDescription>
                   </div>
                 </div>
-                <p>Feels like {roundTemperature(currentWeather.current.feels_like)}°{isCelsius ? 'C' : 'F'}{'.'}</p>
                 <p>{currentWeather.current.weather[0].description}</p>
                 <div className="weather-info">
                 </div>
