@@ -9,20 +9,47 @@ interface MainForecastProps {
   // isCelsius: boolean;
 }
 
-  const MainForecast: React.FC<MainForecastProps> = ({ currentWeather, isCelsius }) => {
-    
+const MainForecast: React.FC<MainForecastProps> = ({ currentWeather, isCelsius }) => {
+
+  let time = currentWeather.list.dt
+  const date = new Date(time * 1000); // Convert timestamp to milliseconds
+  console.log(date.toString()); // Output the date and time
+
+  const currentLocalDate = new Date().toLocaleDateString("en-US", {
+    timeZoneName: "short",
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  }
+  )
+  console.log(currentLocalDate);
+
   return (
     <Card className="main-forecast w-full flex flex-col border-2 rounded-xl">
       <CardTitle className="">Current Weather</CardTitle>
+      <CardDescription>
+        {new Date().toLocaleDateString("en-US", {
+          timeZoneName: "short",
+          weekday: "long",
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        }
+        )}
+      </CardDescription>
       <div className="flex items-center justify-center flex-col">
         {/* current weather container */}
         <div className="w-full">
           <div className="border-2 rounded-xl w-full">
             <CardHeader className="flex flex-col justify-center items-center">
-            {/* <CardTitle>{currentWeather}</CardTitle>
-              <CardDescription>{currentWeather}</CardDescription> */}
-              <CardTitle>{currentWeather.location}</CardTitle>
-              <CardDescription>{currentWeather.dateTime}</CardDescription>
+              <CardTitle>{currentWeather.city.name}, {currentWeather.city.country}</CardTitle>
+              <CardDescription>{currentWeather.city.name}</CardDescription>
+              {/* {console.log('currentWeather.list.main', currentWeather.list)} */}
             </CardHeader>
             <CardContent>
               <div className="flex flex-col justify-center items-center">

@@ -35,26 +35,35 @@ interface ExpandForecastProps {
 
 export default async function Home({ isCelsius, exposedDays, toggleDayExposure }: HomeProps) {
 
-const lat = "49.16";
-const lon = "-123.13";
-const apiKey = process.env.OPENWEATHERMAP_API_KEY;
+  const lat = "49.16";
+  const lon = "-123.13";
+  const apiKey = process.env.OPENWEATHERMAP_API_KEY;
 
-try {
-  const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
+  // const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
+  // const data = await response.json()
+  // console.log('data',data)
   
-  const data = await response.json(); 
-  console.log("Fetched data:", data.city.name);
+  let data = {};
 
-  // return {
-  //   props: { currentWeather: data.city.name }
-  // };
-} catch (error) {
-  console.error('There was a problem with the fetch operation:', error);
-  return <div>Loading...</div>;
-}
+  try {
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    // const data = await response.json();
+    data = await response.json();
+    // console.log("Fetched data:", data.city.name);
+
+    // return {
+    //   props: { currentWeather: data.city.name }
+    // };
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error);
+    return <div>Loading...</div>;
+  }
+
+  console.log('Data:', data);
 
   const currentWeather: WeatherData = {
     location: 'New York',
@@ -108,7 +117,7 @@ try {
       </div>
       <div className="pb-4">
         {/* <MainForecast currentWeather={currentWeather} isCelsius={isCelsius} /> */}
-        <MainForecast currentWeather={currentWeather}/>
+        <MainForecast currentWeather={data} />
       </div>
       <div className="pb-4">
         <ChartComponent />
