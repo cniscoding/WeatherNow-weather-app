@@ -1,5 +1,5 @@
 'use client'
-import {roundTemperature} from '@/lib/utils'
+import { roundTemperature } from '@/lib/utils'
 import React from 'react';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import {
@@ -30,12 +30,14 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ currentWeather, exposed
                   <div className="flex flex-col justify-center items-center">
                     {/* <TiWeatherDownpour size={'5em'} /> */}
                     <div className={`relative invert-0 dark:invert`}>
-                    <img
-                      // alt={day.weather.description.toString()}
-                      src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
-                      className="select-none"
-                    />
-                  </div>
+                      {day.weather[0].icon && (
+                        <img
+                          // alt={day.weather.description.toString()}
+                          src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                          className="select-none"
+                        />
+                      )}
+                    </div>
                     <div>
                       Low: {roundTemperature(day.temp.min)} °C | High: {roundTemperature(day.temp.max)} °C
                     </div>

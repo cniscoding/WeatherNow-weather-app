@@ -57,11 +57,14 @@ const MainForecast: React.FC<MainForecastProps> = ({ currentWeather, isCelsius }
               <div className="flex flex-col justify-center items-center">
                 <div className="weather-details flex flex-row">
                   <div className={`relative invert-0 dark:invert`}>
+                  {currentWeather.current.weather[0].icon && (
                     <img
                       alt={currentWeather.current.weather[0].description.toString()}
                       src={`https://openweathermap.org/img/wn/${currentWeather.current.weather[0].icon}@2x.png`}
                       className="select-none"
                     />
+                    )}
+                  
                   </div>
                   {/* https://openweathermap.org/img/wn/09n@2x.png */}
                   <div className="temperature flex items-center justify-center flex-col">
