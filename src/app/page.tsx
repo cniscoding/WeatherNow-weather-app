@@ -60,50 +60,51 @@ export default async function Home({ isCelsius, exposedDays, toggleDayExposure }
 
   // console.log('Data:', data);
 
-  const currentWeather: WeatherData = {
-    location: 'New York',
-    dateTime: new Date().toLocaleString(),
-    temperature: 20,
-    feelsLike: 22,
-    description: 'Partly cloudy',
-    forecast: [
-      {
-        date: 'April 23, 2024',
-        image: 'forecast-image-1.png',
-        highTemperature: 25,
-        lowTemperature: 18,
-        forecastType: 'Light rain',
-      },
-      {
-        date: 'April 24, 2024',
-        image: 'forecast-image-2.png',
-        highTemperature: 27,
-        lowTemperature: 20,
-        forecastType: 'Broken clouds',
-      },
-      {
-        date: 'April 25, 2024',
-        image: 'forecast-image-3.png',
-        highTemperature: 10,
-        lowTemperature: 2,
-        forecastType: 'Broken clouds',
-      },
-      {
-        date: 'April 26, 2024',
-        image: 'forecast-image-3.png',
-        highTemperature: 10,
-        lowTemperature: 2,
-        forecastType: 'Broken clouds',
-      },
-      {
-        date: 'April 27, 2024',
-        image: 'forecast-image-3.png',
-        highTemperature: 10,
-        lowTemperature: 2,
-        forecastType: 'Broken clouds',
-      },
-    ],
-  };
+  // comment out and use API data
+  // const currentWeather: WeatherData = {
+  //   location: 'New York',
+  //   dateTime: new Date().toLocaleString(),
+  //   temperature: 20,
+  //   feelsLike: 22,
+  //   description: 'Partly cloudy',
+  //   forecast: [
+  //     {
+  //       date: 'April 23, 2024',
+  //       image: 'forecast-image-1.png',
+  //       highTemperature: 25,
+  //       lowTemperature: 18,
+  //       forecastType: 'Light rain',
+  //     },
+  //     {
+  //       date: 'April 24, 2024',
+  //       image: 'forecast-image-2.png',
+  //       highTemperature: 27,
+  //       lowTemperature: 20,
+  //       forecastType: 'Broken clouds',
+  //     },
+  //     {
+  //       date: 'April 25, 2024',
+  //       image: 'forecast-image-3.png',
+  //       highTemperature: 10,
+  //       lowTemperature: 2,
+  //       forecastType: 'Broken clouds',
+  //     },
+  //     {
+  //       date: 'April 26, 2024',
+  //       image: 'forecast-image-3.png',
+  //       highTemperature: 10,
+  //       lowTemperature: 2,
+  //       forecastType: 'Broken clouds',
+  //     },
+  //     {
+  //       date: 'April 27, 2024',
+  //       image: 'forecast-image-3.png',
+  //       highTemperature: 10,
+  //       lowTemperature: 2,
+  //       forecastType: 'Broken clouds',
+  //     },
+  //   ],
+  // };
 
   return (
     <main className="w-[95%] container flex flex-col h-screen p-2 pb-16 pt-4">
@@ -118,7 +119,7 @@ export default async function Home({ isCelsius, exposedDays, toggleDayExposure }
         <ChartComponent currentWeather={data} />
       </div>
       <div className="pb-4">
-        <ExpandForecast currentWeather={currentWeather} exposedDays={exposedDays} toggleDayExposure={toggleDayExposure} isCelsius={isCelsius} />
+        <ExpandForecast currentWeather={data} exposedDays={exposedDays} toggleDayExposure={toggleDayExposure} isCelsius={isCelsius} />
       </div>
     </main>
   );
