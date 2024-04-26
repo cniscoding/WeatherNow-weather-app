@@ -20,7 +20,7 @@ const SearchBox = () => {
       setLoading(true);
       if (query.trim() !== '') {
         const data = await searchLocation(query);
-        setResults(data); 
+        setResults(data);
         setStatus('OK');
         console.log("Response:", data); // Log the response
       } else {
@@ -40,14 +40,14 @@ const SearchBox = () => {
   };
 
   const handleItemClick = (lon, lat) => {
-    // navigation.push({
-    //   pathname: pathname,
-    //   query: { searchParams, lon, lat }
-    // });
+    let searchString = `?Longitude=${lon}&Latitude=${lat}`;
+    navigation.push(`/${searchString}`);
 
-    console.log('lat', lat, 'lon', lon)
-    const url = `${pathname}?${searchParams}`
-    console.log(url)
+    const searchLong = searchParams.get('Longitude')
+    const searchLat = searchParams.get('Latitude')
+    console.log('searchLong', searchLong)
+    console.log('searchLat', searchLat)
+
   };
 
   const renderSuggestions = () => {
@@ -57,10 +57,10 @@ const SearchBox = () => {
 
     return results.map((result, index) => (
       <li key={index} onClick={() => handleItemClick(result.lon, result.lat)}>
-      {result.name || ''}{result.name && (result.state || result.country) && ', '}
-      {result.state || ''}{result.state && result.country && ', '}
-      {result.country || ''}
-    </li>
+        {result.name || ''}{result.name && (result.state || result.country) && ', '}
+        {result.state || ''}{result.state && result.country && ', '}
+        {result.country || ''}
+      </li>
     ));
   };
 

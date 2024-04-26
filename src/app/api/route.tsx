@@ -16,17 +16,31 @@
 //   });
 // }
 
-export default async function getWeatherData(lat, lon) {
+// export async function getProjects() {
+//   let { lat, lon } = await getDefaultLocation();
+
+//   console.log('lat', lat, 'lon', lon);
+
+//   try {
+//     const weatherData = await getWeatherData(lat, lon);
+//     return weatherData;
+//   } catch (error) {
+//     console.error('Error fetching weather data:', error);
+//     return null;
+//   }
+// }
+
+export async function getWeatherData(lat, lon) {
   const apiKey = process.env.OPENWEATHERMAP_API_KEY;
   const exclude = 'minutely';
   const units = 'metric';
 
   // let { lat, lon } = await getDefaultLocation();
-  console.log(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&units=${units}&appid=${apiKey}`)
+  console.log(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&units=${units}&appid=${apiKey}`)
 
   try {
 
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&units=${units}&appid=${apiKey}`);
+    const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&units=${units}&appid=${apiKey}`);
     
     if (!response.ok) {
       throw new Error('Network response was not ok');
