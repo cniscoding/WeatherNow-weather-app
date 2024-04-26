@@ -6,6 +6,7 @@ import ExpandForecast from '../components/features/expandForecast';
 // import getWeatherData from '../app/api/route'
 import NavBar from '../components/features/navBar'
 import { searchLocation } from '../lib/utils';
+import SearchBox from "@/components/features/searchBox"
 
 interface HomeProps {
   isCelsius: boolean;
@@ -85,6 +86,7 @@ export default async function Home({ isCelsius, exposedDays, toggleDayExposure }
 
   return (
     <main className="w-[95%] container flex flex-col h-screen p-2 pb-16 pt-4">
+      <SearchBox />
       <div className="py-4">
         <NavBar />
       </div>

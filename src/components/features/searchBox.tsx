@@ -1,22 +1,26 @@
-
+'use client'
 
 import { useState } from 'react';
 import { Input } from "@/components/ui/input"
 import { searchLocation } from "@/app/api/searchLocation"
 import { Button } from "@/components/ui/button"
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 const SearchBox = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigation = useRouter();
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   const handleSearchClick = async () => {
     try {
       setLoading(true);
       if (query.trim() !== '') {
         const data = await searchLocation(query);
-        setResults(data);
+        setResults(data); 
         setStatus('OK');
         console.log("Response:", data); // Log the response
       } else {
@@ -35,13 +39,28 @@ const SearchBox = () => {
     setQuery(e.target.value);
   };
 
+  const handleItemClick = (lon, lat) => {
+    // navigation.push({
+    //   pathname: pathname,
+    //   query: { searchParams, lon, lat }
+    // });
+
+    console.log('lat', lat, 'lon', lon)
+    const url = `${pathname}?${searchParams}`
+    console.log(url)
+  };
+
   const renderSuggestions = () => {
     if (results.length === 0) {
       return <li>No results found</li>;
     }
 
     return results.map((result, index) => (
-      <li key={index}>{result.name}, {result.state}, {result.country}</li>
+      <li key={index} onClick={() => handleItemClick(result.lon, result.lat)}>
+      {result.name || ''}{result.name && (result.state || result.country) && ', '}
+      {result.state || ''}{result.state && result.country && ', '}
+      {result.country || ''}
+    </li>
     ));
   };
 
