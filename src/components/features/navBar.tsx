@@ -1,6 +1,7 @@
 'use client'
 import React, {useState} from 'react';
 import { searchLocation } from '../../lib/utils';
+import SearchBox from "./searchBox"
 
 interface navBarProps {
 
@@ -46,14 +47,15 @@ const navBar: React.FC<navBarProps> = ({ }) => {
 
     <nav className="bg-gray-800 text-white py-4 px-6 flex justify-between items-center">
       <div className="flex items-center">
-        <input
+        <SearchBox />
+        {/* <input
           type="text"
           placeholder="Search For Location"
           value={searchQuery}
           onChange={handleInputChange}
           className="border-b border-white bg-transparent text-white mr-2"
         />
-        <button onClick={handleSearch} className="text-white">🔎</button>
+        <button onClick={handleSearch} className="text-white">🔎</button> */}
       </div>
       <div>
       </div>

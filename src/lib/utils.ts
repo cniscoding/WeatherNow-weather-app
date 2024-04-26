@@ -12,7 +12,7 @@ export function roundTemperature(temp: number) {
 }
 
 
-export const searchLocation = async (searchQuery: string): Promise<any> => {
+export async function searchLocation (searchQuery: string) {
   const url = `http://api.openweathermap.org/geo/1.0/direct?q=${searchQuery}&limit=5&appid=${apiKey}`;
 
   try {
