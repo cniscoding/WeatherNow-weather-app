@@ -10,9 +10,9 @@ import { TiWeatherDownpour } from 'react-icons/ti';
 
 interface ExpandForecastProps {
   currentWeather: any;
-  exposedDays: boolean[];
-  toggleDayExposure: (index: number) => void;
-  isCelsius: boolean;
+  // exposedDays: boolean[];
+  // toggleDayExposure: (index: number) => void;
+  // isCelsius: boolean;
 }
 
 const ExpandForecast: React.FC<ExpandForecastProps> = ({ currentWeather, exposedDays, toggleDayExposure, isCelsius }) => {

@@ -1,9 +1,11 @@
+
 import React, { useEffect } from 'react';
 import ChartComponent from '../components/features/Chart';
 import MainForecast from '../components/features/mainForecast';
 import ExpandForecast from '../components/features/expandForecast';
-import getWeatherData from '../app/api/route'
+// import getWeatherData from '../app/api/route'
 import NavBar from '../components/features/navBar'
+import { searchLocation } from '../lib/utils';
 
 interface HomeProps {
   isCelsius: boolean;
@@ -29,27 +31,12 @@ interface WeatherData {
 
 interface ExpandForecastProps {
   currentWeather: any;
-  exposedDays: boolean[];
-  toggleDayExposure: (index: number) => void;
-  isCelsius: boolean;
+  // exposedDays: boolean[];
+  // toggleDayExposure: (index: number) => void;
+  // isCelsius: boolean;
 }
 
 export default async function Home({ isCelsius, exposedDays, toggleDayExposure }: HomeProps) {
-  // function getWeatherData() {
-  //   navigator.geolocation.getCurrentPosition((success) => {
-  //     let {lat,lon} = success.coords;
-
-  //     fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&units=${units}&appid=${apiKey}`)
-  //   .then(res => res.json())
-  //   .then(data =>{
-  //     console.log(data);
-  //   })
-  //   })
-  // }
-
-
-  // const lat = "49.16";
-  // const lon = "-123.13";
   const apiKey = process.env.OPENWEATHERMAP_API_KEY;
   const exclude = 'minutely';
   const units = 'metric'
@@ -69,7 +56,7 @@ export default async function Home({ isCelsius, exposedDays, toggleDayExposure }
         console.error('Error getting location:', error);
         // Set default latitude and longitude Japan
         lat = '336.2048';
-        lon = '-138.2529'; // Default longitude
+        lon = '138.2529'; // Default longitude
       }
     );
   } catch (error) {
@@ -79,13 +66,11 @@ export default async function Home({ isCelsius, exposedDays, toggleDayExposure }
         lon = '138.2529'; // Default longitude
   }
 
-  console.log('Latitude:', lat);
-  console.log('Longitude:', lon);
+  console.log('Latitude: error', lat);
+  console.log('Longitude: error', lon);
 
 
   try {
-    // const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
-    // use one call 3.0 instead
     const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&units=${units}&appid=${apiKey}`);
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -97,54 +82,6 @@ export default async function Home({ isCelsius, exposedDays, toggleDayExposure }
     console.error('There was a problem with the fetch operation:', error);
     return <div>Loading...</div>;
   }
-
-  // console.log('Data:', data);
-
-  // comment out and use API data
-  // const currentWeather: WeatherData = {
-  //   location: 'New York',
-  //   dateTime: new Date().toLocaleString(),
-  //   temperature: 20,
-  //   feelsLike: 22,
-  //   description: 'Partly cloudy',
-  //   forecast: [
-  //     {
-  //       date: 'April 23, 2024',
-  //       image: 'forecast-image-1.png',
-  //       highTemperature: 25,
-  //       lowTemperature: 18,
-  //       forecastType: 'Light rain',
-  //     },
-  //     {
-  //       date: 'April 24, 2024',
-  //       image: 'forecast-image-2.png',
-  //       highTemperature: 27,
-  //       lowTemperature: 20,
-  //       forecastType: 'Broken clouds',
-  //     },
-  //     {
-  //       date: 'April 25, 2024',
-  //       image: 'forecast-image-3.png',
-  //       highTemperature: 10,
-  //       lowTemperature: 2,
-  //       forecastType: 'Broken clouds',
-  //     },
-  //     {
-  //       date: 'April 26, 2024',
-  //       image: 'forecast-image-3.png',
-  //       highTemperature: 10,
-  //       lowTemperature: 2,
-  //       forecastType: 'Broken clouds',
-  //     },
-  //     {
-  //       date: 'April 27, 2024',
-  //       image: 'forecast-image-3.png',
-  //       highTemperature: 10,
-  //       lowTemperature: 2,
-  //       forecastType: 'Broken clouds',
-  //     },
-  //   ],
-  // };
 
   return (
     <main className="w-[95%] container flex flex-col h-screen p-2 pb-16 pt-4">
@@ -159,7 +96,8 @@ export default async function Home({ isCelsius, exposedDays, toggleDayExposure }
         <ChartComponent currentWeather={data} />
       </div>
       <div className="pb-4">
-        <ExpandForecast currentWeather={data} exposedDays={exposedDays} toggleDayExposure={toggleDayExposure} isCelsius={isCelsius} />
+        {/* <ExpandForecast currentWeather={data} exposedDays={exposedDays} toggleDayExposure={toggleDayExposure} isCelsius={isCelsius} /> */}
+        <ExpandForecast currentWeather={data} />
       </div>
     </main>
   );

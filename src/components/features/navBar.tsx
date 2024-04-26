@@ -1,5 +1,6 @@
 'use client'
 import React, {useState} from 'react';
+import { searchLocation } from '../../lib/utils';
 
 interface navBarProps {
 
@@ -8,18 +9,14 @@ interface navBarProps {
 const navBar: React.FC<navBarProps> = ({ }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [weatherData, setWeatherData] = useState(null);
-  const apiKey = process.env.OPENWEATHERMAP_API_KEY;
+  // const apiKey = process.env.OPENWEATHERMAP_API_KEY;
 
 
   const handleSearch = async () => {
     console.log(searchQuery)
     try {
-      // Fetch longitude and latitude using OpenWeatherMap Geo API
-      console.log(`http://api.openweathermap.org/geo/1.0/direct?q=${searchQuery}&limit=5&appid=${apiKey}`)
-      const geoResponse = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${searchQuery}&limit=5&appid=${apiKey}`
-      );
-      console.log(geoResponse)
+      const locationData = await searchLocation(searchQuery);
+      console.log('Location Data:', locationData);
       // const geoData = await geoResponse.json();
 
       // Extract longitude and latitude from geoData
