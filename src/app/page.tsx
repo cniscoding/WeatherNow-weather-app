@@ -35,14 +35,53 @@ interface ExpandForecastProps {
 }
 
 export default async function Home({ isCelsius, exposedDays, toggleDayExposure }: HomeProps) {
+  // function getWeatherData() {
+  //   navigator.geolocation.getCurrentPosition((success) => {
+  //     let {lat,lon} = success.coords;
 
-  const lat = "49.16";
-  const lon = "-123.13";
+  //     fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&units=${units}&appid=${apiKey}`)
+  //   .then(res => res.json())
+  //   .then(data =>{
+  //     console.log(data);
+  //   })
+  //   })
+  // }
+
+
+  // const lat = "49.16";
+  // const lon = "-123.13";
   const apiKey = process.env.OPENWEATHERMAP_API_KEY;
   const exclude = 'minutely';
   const units = 'metric'
-
   let data = {};
+
+  let lat;
+  let lon;
+
+  try {
+    navigator.geolocation.getCurrentPosition(
+      (success) => {
+        const { latitude, longitude } = success.coords;
+        lat = latitude;
+        lon = longitude;
+      },
+      (error) => {
+        console.error('Error getting location:', error);
+        // Set default latitude and longitude Japan
+        lat = '336.2048';
+        lon = '-138.2529'; // Default longitude
+      }
+    );
+  } catch (error) {
+    console.error('Error retrieving geolocation:', error);
+        // Set default latitude and longitude Japan
+        lat = '36.2048';
+        lon = '138.2529'; // Default longitude
+  }
+
+  console.log('Latitude:', lat);
+  console.log('Longitude:', lon);
+
 
   try {
     // const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
