@@ -2,7 +2,6 @@
 import React from 'react';
 import { roundTemperature } from '@/lib/utils'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { TiWeatherDownpour } from 'react-icons/ti';
 import Image from 'next/image'
 
 
@@ -12,23 +11,6 @@ interface MainForecastProps {
 }
 
 const MainForecast: React.FC<MainForecastProps> = ({ currentWeather, isCelsius }) => {
-
-  // let time = currentWeather.list.dt
-  // const date = new Date(time * 1000); // Convert timestamp to milliseconds
-  // console.log(date.toString()); // Output the date and time
-
-  // const currentLocalDate = new Date().toLocaleDateString("en-US", {
-  //   timeZoneName: "short",
-  //   weekday: "long",
-  //   month: "long",
-  //   day: "numeric",
-  //   year: "numeric",
-  //   hour: "numeric",
-  //   minute: "numeric",
-  // }
-  // )
-  // console.log(currentLocalDate);
-  // console.log('currentWeather.list[1]', currentWeather.list[1])
 
   return (
     <Card className="main-forecast w-full flex flex-col border-2 rounded-xl">

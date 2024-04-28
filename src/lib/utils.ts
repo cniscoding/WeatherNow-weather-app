@@ -27,3 +27,25 @@ export async function searchLocation (searchQuery: string) {
       throw error;
   }
 };
+
+export async function getLocationData() {
+  try {
+    let lat, lon;
+
+    lat = '36.2048';
+    lon = '138.2529';
+
+    const apiKey = process.env.OPENWEATHERMAP_API_KEY;
+    const exclude = 'minutely';
+    const units = 'metric';
+
+    const res = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&units=${units}&appid=${apiKey}`, { cache: 'no-store' });
+    const projects = await res.json();
+
+    // console.log('Weather data:', projects);
+    return projects;
+  } catch (error) {
+    console.error('Error fetching weather data:', error);
+    return null;
+  }
+}

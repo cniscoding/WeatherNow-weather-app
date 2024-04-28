@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Input } from "@/components/ui/input"
 import { searchLocation } from "@/app/api/searchLocation"
 import { Button } from "@/components/ui/button"
@@ -12,8 +12,8 @@ const SearchBox = () => {
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
   const navigation = useRouter();
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+  const pathname = usePathname();
+  const searchParams = useSearchParams(); 
 
   const handleSearchClick = async () => {
     try {
@@ -45,8 +45,10 @@ const SearchBox = () => {
 
     const searchLong = searchParams.get('Longitude')
     const searchLat = searchParams.get('Latitude')
-    console.log('searchLong', searchLong)
-    console.log('searchLat', searchLat)
+    // console.log('searchLong', searchLong)
+    // console.log('searchLat', searchLat)
+
+
 
   };
 
