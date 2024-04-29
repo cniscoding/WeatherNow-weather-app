@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ChartComponent from '../components/features/Chart';
 import MainForecast from '../components/features/mainForecast';
 import ExpandForecast from '../components/features/expandForecast';
@@ -20,15 +20,8 @@ interface HomeProps {
   latitude: string;
 }
 
-interface ExpandForecastProps {
-  currentWeather: any;
-  // exposedDays: boolean[];
-  // toggleDayExposure: (index: number) => void;
-  // isCelsius: boolean;
-}
-
 // export default async function Home({ isCelsius, exposedDays, toggleDayExposure, longitude, latitude }: HomeProps) {
-  export default function Home() {
+export default function Home() {
 
   return (
     <main className="w-[95%] container flex flex-col h-screen p-2 pb-16 pt-4">
@@ -38,23 +31,17 @@ interface ExpandForecastProps {
         <NavBar />
       </div>
       <div className="pb-4">
-        {/* <MainForecast currentWeather={currentWeather} isCelsius={isCelsius} /> */}
-        {/* <MainForecast currentWeather={locationData} /> */}
         <MainForecast />
       </div>
       <div className="pb-4">
-        {/* <ChartComponent currentWeather={locationData} /> */}
         <ChartComponent />
       </div>
       <div className="pb-4">
-        {/* <ExpandForecast currentWeather={data} exposedDays={exposedDays} toggleDayExposure={toggleDayExposure} isCelsius={isCelsius} /> */}
-        {/* <ExpandForecast currentWeather={locationData} /> */}
         <ExpandForecast />
       </div>
     </main>
   );
 };
 
-// export default Home;
 
 

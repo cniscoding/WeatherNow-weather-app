@@ -15,7 +15,6 @@ interface ExpandForecastProps {
 //   // isCelsius: boolean;
 }
 
-// const ExpandForecast: React.FC<ExpandForecastProps> = ({ currentWeather, exposedDays, toggleDayExposure, isCelsius }) => {
 const ExpandForecast: React.FC<ExpandForecastProps> = ({exposedDays}) => {
   const [currentWeather, setCurrentWeather] = useState<any>(null); // State to hold weather data
   const [isCelsius, setIsCelsius] = useState<boolean>(true); // State to hold temperature unit

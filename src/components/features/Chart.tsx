@@ -43,7 +43,6 @@ interface ChartComponentProps {
 
 
 // const ChartComponent: React.FC<ChartComponentProps> = ({ currentWeather }) => {
-// const ChartComponent = (currentWeather: CurrentWeather) => {
 const ChartComponent: React.FC<ChartComponentProps> = () => {
   const [currentWeather, setCurrentWeather] = useState<any>(null); // State to hold weather data
   const [isCelsius, setIsCelsius] = useState<boolean>(true); // State to hold temperature unit
@@ -98,7 +97,6 @@ const ChartComponent: React.FC<ChartComponentProps> = () => {
         const labels: string[] = [];
         const temperatureData: number[] = [];
   
-        // console.log('currentWeather from chart', currentWeather.timezone)
         currentWeather.hourly.forEach(hourData => {
           labels.push(unixToHour(hourData.dt));
           temperatureData.push(hourData.temp);
@@ -140,7 +138,7 @@ const ChartComponent: React.FC<ChartComponentProps> = () => {
   
     // Call fetchData function
     fetchData();
-  }, []); // Empty dependency array ensures this effect runs only once on component mount
+  }, []); 
   
 
   return (

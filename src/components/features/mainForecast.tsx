@@ -14,10 +14,9 @@ interface MainForecastProps {
   // isCelsius: boolean;
 }
 
-// const MainForecast: React.FC<MainForecastProps> = () => {
 const MainForecast: React.FC<MainForecastProps> = () => {
-  const [currentWeather, setCurrentWeather] = useState<any>(null); // State to hold weather data
-  const [isCelsius, setIsCelsius] = useState<boolean>(true); // State to hold temperature unit
+  const [currentWeather, setCurrentWeather] = useState<any>(null); 
+  const [isCelsius, setIsCelsius] = useState<boolean>(true); 
 
   useEffect(() => {
     async function fetchData() {
@@ -36,6 +35,7 @@ const MainForecast: React.FC<MainForecastProps> = () => {
           latitude = parseFloat(searchLat);
           longitude = parseFloat(searchLong);
         } else {
+          // should add another if statement with a default incase geolocation is turned off by client
           // If no search params, get geolocation
           const { latitude: geoLat, longitude: geoLong } = await getGeolocation();
           latitude = geoLat;
@@ -118,7 +118,6 @@ const MainForecast: React.FC<MainForecastProps> = () => {
                     )}
 
                   </div>
-                  {/* https://openweathermap.org/img/wn/09n@2x.png */}
                   <div className="temperature flex items-center justify-center flex-col">
                     <CardTitle>{roundTemperature(currentWeather.current.temp)} °{isCelsius ? 'C' : 'F'}</CardTitle>
                     <CardDescription>Feels like {roundTemperature(currentWeather.current.feels_like)} °{isCelsius ? 'C' : 'F'}{'.'}</CardDescription>
