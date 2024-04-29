@@ -9,36 +9,27 @@ import React, { useEffect, useState } from 'react';
 import { getWeatherData } from '@/app/api/route'
 
 interface ExpandForecastProps {
-//   currentWeather: any;
+
   exposedDays: boolean[];
-//   // toggleDayExposure: (index: number) => void;
-//   // isCelsius: boolean;
+
 }
 
 const ExpandForecast: React.FC<ExpandForecastProps> = ({exposedDays}) => {
-  const [currentWeather, setCurrentWeather] = useState<any>(null); // State to hold weather data
-  const [isCelsius, setIsCelsius] = useState<boolean>(true); // State to hold temperature unit
+  const [currentWeather, setCurrentWeather] = useState<any>(null); 
+  const [isCelsius, setIsCelsius] = useState<boolean>(true); 
 
   useEffect(() => {
     async function fetchData() {
       try {
-        // Get geolocation
         const { latitude, longitude } = await getGeolocation();
-
-        // Get weather data based on geolocation
         const { props: { currentWeather } } = await getWeatherData(latitude, longitude);
-        console.log('Weather data:', currentWeather);
-
-        // Update state with weather data
         setCurrentWeather(currentWeather);
       } catch (error) {
         console.error('Error fetching weather data:', error);
       }
     }
-
-    // Call fetchData function
     fetchData();
-  }, []); // Empty dependency array ensures this effect runs only once on component mount
+  }, []);
 
   async function getGeolocation() {
     return new Promise((resolve, reject) => {
@@ -55,11 +46,9 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({exposedDays}) => {
       );
     });
   }
-
   if (!currentWeather) {
-    return null; // Render nothing if weather data is not available yet
+    return null; // 
   }
-
 
   return (
     <div className="border-2 rounded-xl p-4">
