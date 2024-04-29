@@ -115,8 +115,8 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays }) => {
             {/* <div>{getDayOfWeek(day.dt)}</div> */}
             <div className="flex flex-col h-full justify-between">
               <div className="">
-                <CardTitle className='text-md'>{getDayOfWeek(day.dt)}</CardTitle>
-                <CardDescription className='text-sm'>{day.summary}</CardDescription>
+                <CardTitle className='text-sm md:text-lg truncate'>{getDayOfWeek(day.dt)}</CardTitle>
+                <CardDescription className='text-[0.65rem] sm:text-sm'>{day.summary}</CardDescription>
               </div>
               <div className={`relative invert-0 dark:invert`}>
                 {/* <div> */}
@@ -132,11 +132,11 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays }) => {
         ))}
       </div>
       <div className="forecast-container grid grid-cols-6 gap-2">
-        <ul className="flex flex-col items-end">
-          <li>Low: </li>
+        <ul className="flex flex-col items-end justify-center">
+          <li>Low </li>
           <li className="bg-gray-200 w-full flex justify-end">High</li>
-          <li>Feels like Low:</li>
-          <li className="bg-gray-200 w-full flex justify-end">Feels like High</li>
+          <li>Feels</li>
+          <li className="bg-gray-200 w-full flex justify-end">Feels</li>
         </ul>
 
         {/* Bottom part */}

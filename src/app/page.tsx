@@ -40,9 +40,9 @@ export default function Home() {
             <div className="pb-4">
               <MainForecast />
             </div>
-            <div className="pb-4">
+            {/* <div className="pb-4">
               <ChartComponent />
-            </div>
+            </div> */}
             <div className="pb-4">
               <ExpandForecast />
             </div>

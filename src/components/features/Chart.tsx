@@ -93,7 +93,6 @@ const ChartComponent: React.FC<ChartComponentProps> = () => {
           return formattedHour + period;
         }
   
-        // Extracting labels and temperature data
         const labels: string[] = [];
         const temperatureData: number[] = [];
   
@@ -101,10 +100,7 @@ const ChartComponent: React.FC<ChartComponentProps> = () => {
           labels.push(unixToHour(hourData.dt));
           temperatureData.push(hourData.temp);
         });
-  
-        console.log('Labels', labels)
-        console.log('temperatureData', temperatureData)
-        // Create a new chart instance
+
         const newChart = new Chart(ctx, {
           type: 'line',
           data: {
@@ -126,8 +122,7 @@ const ChartComponent: React.FC<ChartComponentProps> = () => {
             maintainAspectRatio: false,
           }
         });
-  
-        // Return a clean-up function to destroy the chart when the component unmounts
+
         return () => {
           newChart.destroy();
         };
@@ -135,15 +130,14 @@ const ChartComponent: React.FC<ChartComponentProps> = () => {
         console.error('Error fetching weather data:', error);
       }
     }
-  
-    // Call fetchData function
+
     fetchData();
   }, []); 
   
 
   return (
-    <div className="border-2 rounded-xl p-4">
-      <CardTitle className="">24 Hour Forecast</CardTitle>
+    <div className="p-2 m-2 border-2 rounded-xl">
+      <CardTitle className="">24 Hour Temperature Forecast</CardTitle>
       <div>
         <canvas id="myChart"></canvas>
       </div>

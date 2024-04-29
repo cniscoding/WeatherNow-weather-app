@@ -7,6 +7,8 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import Image from 'next/image'
 import { getWeatherData } from '@/app/api/route'
 import { useWeatherData } from './useWeatherData';
+import ChartComponent from '@/components/features/Chart';
+
 
 
 interface MainForecastProps {
@@ -15,8 +17,8 @@ interface MainForecastProps {
 }
 
 const MainForecast: React.FC<MainForecastProps> = () => {
-  const [currentWeather, setCurrentWeather] = useState<any>(null); 
-  const [isCelsius, setIsCelsius] = useState<boolean>(true); 
+  const [currentWeather, setCurrentWeather] = useState<any>(null);
+  const [isCelsius, setIsCelsius] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchData() {
@@ -83,7 +85,7 @@ const MainForecast: React.FC<MainForecastProps> = () => {
   }
 
   return (
-    <Card className="main-forecast w-full flex flex-col border-2 rounded-xl p-4">
+    <Card className="main-forecast w-full flex flex-col">
       <CardTitle className="">Current Weather</CardTitle>
       <CardDescription>
         {new Date().toLocaleDateString("en-US", {
@@ -97,10 +99,10 @@ const MainForecast: React.FC<MainForecastProps> = () => {
         }
         )}
       </CardDescription>
-      <div className="flex items-center justify-center flex-col">
+      <div className="flex">
         {/* current weather container */}
         <div className="w-full">
-          <div className="w-full">
+          <div className="">
             <CardHeader className="flex flex-col justify-center items-center">
               <CardTitle>{currentWeather.timezone}</CardTitle>
               <CardDescription>{currentWeather.daily[0].summary}</CardDescription>
@@ -116,7 +118,6 @@ const MainForecast: React.FC<MainForecastProps> = () => {
                         className="select-none"
                       />
                     )}
-
                   </div>
                   <div className="temperature flex items-center justify-center flex-col">
                     <CardTitle>{roundTemperature(currentWeather.current.temp)} °{isCelsius ? 'C' : 'F'}</CardTitle>
@@ -128,6 +129,10 @@ const MainForecast: React.FC<MainForecastProps> = () => {
                 </div>
               </div>
             </CardContent>
+          </div>
+          {/* testing */}
+          <div>
+                <ChartComponent />
           </div>
         </div>
       </div>
