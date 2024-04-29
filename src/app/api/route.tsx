@@ -1,55 +1,23 @@
 'use server'
 
-// async function getDefaultLocation() {
-//   return new Promise((resolve, reject) => {
-//     navigator.geolocation.getCurrentPosition(
-//       (success) => {
-//         const { latitude, longitude } = success.coords;
-//         resolve({ lat: latitude, lon: longitude });
-//       },
-//       (error) => {
-//         console.error('Error getting location:', error);
-//         // Set default latitude and longitude to Japan
-//         resolve({ lat: '36.2048', lon: '138.2529' });
-//       }
-//     );
-//   });
-// }
+import { geolocationProvider } from "@/components/providers/geolocationProvider";
+import { getLocationData } from "@/lib/utils";
 
-// export async function getProjects() {
-//   let { lat, lon } = await getDefaultLocation();
-
-//   console.log('lat', lat, 'lon', lon);
-
-//   try {
-//     const weatherData = await getWeatherData(lat, lon);
-//     return weatherData;
-//   } catch (error) {
-//     console.error('Error fetching weather data:', error);
-//     return null;
-//   }
+// export async function getWeatherData(latitude, longitude) {
+//   // console.log('latlon1', lat, lon)
+//   // const { lat, lon } = await geolocationProvider;
+//   // console.log('latlon2', lat, lon)
+//   const currentWeather = await getLocationData(latitude, longitude);
+//   // console.log('currentWeather', currentWeather)
+//   return { props: { currentWeather } };
 // }
 
 export async function getWeatherData(lat, lon) {
-  const apiKey = process.env.OPENWEATHERMAP_API_KEY;
-  const exclude = 'minutely';
-  const units = 'metric';
-
-  // let { lat, lon } = await getDefaultLocation();
-  console.log(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&units=${units}&appid=${apiKey}`)
-
   try {
-
-    const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&units=${units}&appid=${apiKey}`);
-    
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const data = await response.json();
-    return data;
+    const currentWeather = await getLocationData(lat, lon);
+    return { props: { currentWeather } };
   } catch (error) {
-    console.error('There was a problem with the fetch operation:', error);
-    return { error: 'Failed to fetch weather data' };
+    console.error('Error fetching weather data:', error);
+    return { props: { currentWeather: null } }; // Handle error gracefully
   }
 }
