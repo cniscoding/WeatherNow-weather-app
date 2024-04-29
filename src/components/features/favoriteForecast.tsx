@@ -91,7 +91,7 @@ export const FavoriteForecast: React.FC = () => {
   ];
 
   return (
-    <Card className="w-full flex flex-col border-2 rounded-xl">
+    <Card className="w-full flex flex-col border-2 rounded-x p-4">
       <CardTitle className="">Favorites</CardTitle>
       <div className="">
         {favoriteList.map((location, index) => (

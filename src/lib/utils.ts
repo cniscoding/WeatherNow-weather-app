@@ -6,6 +6,16 @@ import { geolocationProvider } from "@/components/providers/geolocationProvider"
 
 const apiKey = process.env.OPENWEATHERMAP_API_KEY;
 
+export function getDayOfWeek(timestamp: number) {
+
+  const milliseconds = timestamp * 1000;
+  const date = new Date(milliseconds);
+  const dayOfWeek = date.getDay();
+  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const dayName = daysOfWeek[dayOfWeek];
+  return dayName;
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
