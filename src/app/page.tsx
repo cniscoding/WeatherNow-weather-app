@@ -10,6 +10,7 @@ import NavBar from '../components/features/navBar'
 // import SearchBox from "@/components/features/searchBox"
 import { getWeatherData } from "@/app/api/route"
 import { geolocationProvider } from "../components/providers/geolocationProvider"
+import { FavoriteForecast } from '../components/features/favoriteForecast'
 
 interface HomeProps {
   isCelsius: boolean;
@@ -29,6 +30,9 @@ export default function Home() {
       {/* <SearchBox /> */}
       <div className="py-4">
         <NavBar />
+      </div>
+      <div className="pb-4">
+        <FavoriteForecast />
       </div>
       <div className="pb-4">
         <MainForecast />

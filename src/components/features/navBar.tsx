@@ -14,8 +14,8 @@ const navBar: React.FC<navBarProps> = ({ }) => {
   return (
     <div>
 
-      <nav className="bg-gray-800 text-white py-4 px-6 flex justify-between items-center">
-        <div >
+      <nav className="bg-gray-300 text-black py-4 px-6 flex justify-between items-center flex-col">
+        <div className="">
           <SearchBox />
         </div>
         <div className="flex space-x-4">

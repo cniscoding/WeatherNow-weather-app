@@ -13,8 +13,9 @@ const SearchBox = () => {
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
   const navigation = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
 
   const handleSearchClick = async () => {
     try {
@@ -64,24 +65,54 @@ const SearchBox = () => {
     ));
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+  };
+
+  const handleInputFocus = () => {
+    setIsInputFocused(true);
+  };
+
+  const handleInputBlur = () => {
+    setIsInputFocused(false);
+  };
+
+  // const handleSuggestionsBlur = () => {
+  //   // Reset results and status when suggestions area loses focus
+  //   setIsInputFocused(false);
+  //   setResults([]);
+  //   setStatus('NotOK');
+  // };
+
   return (
-    <div className="relative w-full md:w-auto md:min-w-[280px] text-black flex items-center flex-col justify-center md:flex-row">
+    <form onSubmit={handleSearch} className="relative w-full md:w-auto min-w-[280px] text-black flex items-center flex-col justify-center md:flex-row">
       <Input
-        className="text-black mx-4"
+        className="text-black m-2 sm:min-w-[400px]"
         type="text"
         placeholder="Search City"
         value={query}
         onChange={handleInput}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
       />
-      <Button onClick={handleSearchClick} disabled={loading}>
+      <Button onClick={handleSearchClick} disabled={loading} className="w-full">
         {loading ? 'Searching...' : 'Search'}
       </Button>
-      {status === 'OK' && (
-        <ul className="absolute mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 w-full">
-          {renderSuggestions()}
-        </ul>
+
+      {(status === 'OK' || isInputFocused) && (
+        <div
+          className="absolute top-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 w-full p-1"
+          // onBlur={handleSuggestionsBlur} 
+        >
+          <p className="bg-green-200 font-bold">Search Results</p>
+          <ul className="">
+            {renderSuggestions()}
+          </ul>
+        </div>
       )}
-    </div>
+
+
+    </form>
   );
 };
 
