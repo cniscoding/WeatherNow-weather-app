@@ -6,6 +6,7 @@ import { roundTemperature } from '@/lib/utils'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import Image from 'next/image'
 import { getWeatherData } from '@/app/api/route'
+import { useWeatherData } from './useWeatherData';
 
 
 interface MainForecastProps {

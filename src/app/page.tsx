@@ -29,13 +29,6 @@ interface ExpandForecastProps {
 
 // export default async function Home({ isCelsius, exposedDays, toggleDayExposure, longitude, latitude }: HomeProps) {
   export default function Home() {
-  // const locationData = await getLocationData()
-  // const locationData = await getProjects()
-    // const locationData = await getLocationData();
-    // const geolocation = await geolocationProvider();
-
-    // const locationData =  getLocationData();
-    // const geolocation =  await geolocationProvider();
 
   return (
     <main className="w-[95%] container flex flex-col h-screen p-2 pb-16 pt-4">
@@ -51,10 +44,12 @@ interface ExpandForecastProps {
       </div>
       <div className="pb-4">
         {/* <ChartComponent currentWeather={locationData} /> */}
+        <ChartComponent />
       </div>
       <div className="pb-4">
         {/* <ExpandForecast currentWeather={data} exposedDays={exposedDays} toggleDayExposure={toggleDayExposure} isCelsius={isCelsius} /> */}
         {/* <ExpandForecast currentWeather={locationData} /> */}
+        <ExpandForecast />
       </div>
     </main>
   );

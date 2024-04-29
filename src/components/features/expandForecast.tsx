@@ -1,21 +1,67 @@
 'use client'
 import { roundTemperature } from '@/lib/utils'
-import React from 'react';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card"
-import { TiWeatherDownpour } from 'react-icons/ti';
+import React, { useEffect, useState } from 'react';
+import { getWeatherData } from '@/app/api/route'
 
 interface ExpandForecastProps {
-  currentWeather: any;
-  // exposedDays: boolean[];
-  // toggleDayExposure: (index: number) => void;
-  // isCelsius: boolean;
+//   currentWeather: any;
+  exposedDays: boolean[];
+//   // toggleDayExposure: (index: number) => void;
+//   // isCelsius: boolean;
 }
 
-const ExpandForecast: React.FC<ExpandForecastProps> = ({ currentWeather, exposedDays, toggleDayExposure, isCelsius }) => {
+// const ExpandForecast: React.FC<ExpandForecastProps> = ({ currentWeather, exposedDays, toggleDayExposure, isCelsius }) => {
+const ExpandForecast: React.FC<ExpandForecastProps> = ({exposedDays}) => {
+  const [currentWeather, setCurrentWeather] = useState<any>(null); // State to hold weather data
+  const [isCelsius, setIsCelsius] = useState<boolean>(true); // State to hold temperature unit
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // Get geolocation
+        const { latitude, longitude } = await getGeolocation();
+
+        // Get weather data based on geolocation
+        const { props: { currentWeather } } = await getWeatherData(latitude, longitude);
+        console.log('Weather data:', currentWeather);
+
+        // Update state with weather data
+        setCurrentWeather(currentWeather);
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+      }
+    }
+
+    // Call fetchData function
+    fetchData();
+  }, []); // Empty dependency array ensures this effect runs only once on component mount
+
+  async function getGeolocation() {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (success) => {
+          const { latitude, longitude } = success.coords;
+          console.log('Geolocation success. Latitude:', latitude, 'Longitude:', longitude);
+          resolve({ latitude, longitude });
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+          reject(error);
+        }
+      );
+    });
+  }
+
+  if (!currentWeather) {
+    return null; // Render nothing if weather data is not available yet
+  }
+
+
   return (
     <div className="border-2 rounded-xl">
       <CardTitle className="">8 day forecast</CardTitle>
