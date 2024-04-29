@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { geolocationProvider } from '@/components/providers/geolocationProvider';
 import { getLocationData } from '@/lib/utils';
-import { roundTemperature } from '@/lib/utils'
+import { roundTemperature, currentWeather, fetchData } from '../../lib/utils'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import Image from 'next/image'
 import { getWeatherData } from '@/app/api/route'
@@ -55,6 +55,10 @@ const MainForecast: React.FC<MainForecastProps> = () => {
       );
     });
   }
+  // useEffect(() => {
+  //   // Call fetchData function
+  //   fetchData();
+  // }, []);
 
   if (!currentWeather) {
     return null; // Render nothing if weather data is not available yet
