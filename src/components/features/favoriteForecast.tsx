@@ -91,19 +91,20 @@ export const FavoriteForecast: React.FC = () => {
   ];
 
   return (
-    <Card className="main-forecast w-full flex flex-col border-2 rounded-xl p-4">
+    <Card className="w-full flex flex-col border-2 rounded-xl">
       <CardTitle className="">Favorites</CardTitle>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="">
         {favoriteList.map((location, index) => (
-          <div className="border-2 rounded-xl" key={index}>
+          <div className="border-2 rounded-xl flex flex-col m-2" key={index}>
             <CardHeader className="flex flex-col justify-center items-center p-1">
               <CardTitle>{location.location}</CardTitle>
               <CardDescription><p>{location.current.weather[0].description}</p></CardDescription>
             </CardHeader>
-            <CardContent className="">
+            <CardContent className="flex-grow">
               <div className="flex flex-col justify-center items-center">
-                <div className="flex flex-row">
-                  <div className={`relative invert-0 dark:invert`}>
+                <div className="flex flex-col">
+                  {/* <div className={`relative invert-0 dark:invert mb-2`}> */}
+                  <div>
                     {location.current.weather[0].icon && (
                       <img
                         alt={location.current.weather[0].description}
@@ -113,7 +114,7 @@ export const FavoriteForecast: React.FC = () => {
                     )}
                   </div>
                   <div className="temperature flex items-center justify-center flex-col">
-                    <CardTitle>{roundTemperature(location.current.temp)} °{isCelsius ? 'C' : 'F'}</CardTitle>
+                    <CardTitle >{roundTemperature(location.current.temp)} °{isCelsius ? 'C' : 'F'}</CardTitle>
                     <CardDescription>Feels like {roundTemperature(location.current.feels_like)} °{isCelsius ? 'C' : 'F'}{'.'}</CardDescription>
                   </div>
                 </div>
