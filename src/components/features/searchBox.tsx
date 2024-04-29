@@ -65,9 +65,9 @@ const SearchBox = () => {
   };
 
   return (
-    <div className="relative w-full md:w-auto md:min-w-[280px] text-black">
+    <div className="relative w-full md:w-auto md:min-w-[280px] text-black flex items-center flex-col justify-center md:flex-row">
       <Input
-        className="text-black"
+        className="text-black mx-4"
         type="text"
         placeholder="Search City"
         value={query}

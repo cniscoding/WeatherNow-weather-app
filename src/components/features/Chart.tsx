@@ -142,7 +142,7 @@ const ChartComponent: React.FC<ChartComponentProps> = () => {
   
 
   return (
-    <div className="border-2 rounded-xl">
+    <div className="border-2 rounded-xl p-4">
       <CardTitle className="">24 Hour Forecast</CardTitle>
       <div>
         <canvas id="myChart"></canvas>

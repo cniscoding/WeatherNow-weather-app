@@ -7,7 +7,7 @@ import ExpandForecast from '../components/features/expandForecast';
 // import getWeatherData from '../app/api/route'
 import NavBar from '../components/features/navBar'
 // import { searchLocation, getLocationData } from '../lib/utils';
-import SearchBox from "@/components/features/searchBox"
+// import SearchBox from "@/components/features/searchBox"
 import { getWeatherData } from "@/app/api/route"
 import { geolocationProvider } from "../components/providers/geolocationProvider"
 
@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <main className="w-[95%] container flex flex-col h-screen p-2 pb-16 pt-4">
 
-      <SearchBox />
+      {/* <SearchBox /> */}
       <div className="py-4">
         <NavBar />
       </div>

@@ -83,7 +83,7 @@ const MainForecast: React.FC<MainForecastProps> = () => {
   }
 
   return (
-    <Card className="main-forecast w-full flex flex-col border-2 rounded-xl">
+    <Card className="main-forecast w-full flex flex-col border-2 rounded-xl p-4">
       <CardTitle className="">Current Weather</CardTitle>
       <CardDescription>
         {new Date().toLocaleDateString("en-US", {
@@ -100,7 +100,7 @@ const MainForecast: React.FC<MainForecastProps> = () => {
       <div className="flex items-center justify-center flex-col">
         {/* current weather container */}
         <div className="w-full">
-          <div className="border-2 rounded-xl w-full">
+          <div className="w-full">
             <CardHeader className="flex flex-col justify-center items-center">
               <CardTitle>{currentWeather.timezone}</CardTitle>
               <CardDescription>{currentWeather.daily[0].summary}</CardDescription>

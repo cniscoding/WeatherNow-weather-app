@@ -62,10 +62,10 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({exposedDays}) => {
 
 
   return (
-    <div className="border-2 rounded-xl">
+    <div className="border-2 rounded-xl p-4">
       <CardTitle className="">8 day forecast</CardTitle>
       <CardDescription>timeframe dateNow - date(7days) {currentWeather.dateTime}</CardDescription>
-      <div className="forecast-container grid grid-cols-1 md:flex md:justify-center">
+      <div className="pt-2 forecast-container grid grid-cols-1 md:flex md:justify-center">
         <Accordion type="single" collapsible className="flex flex-col sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {currentWeather.daily.map((day, index) => (
             <div key={index} className={`forecast-item ${exposedDays && exposedDays[index] ? 'exposed' : ''}`} onClick={() => toggleDayExposure(index)}>
