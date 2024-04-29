@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { searchLocation } from "@/app/api/searchLocation"
 import { Button } from "@/components/ui/button"
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { getWeatherData } from '@/app/api/route'
 
 const SearchBox = () => {
   const [query, setQuery] = useState('');
@@ -42,9 +43,11 @@ const SearchBox = () => {
   const handleItemClick = (lon, lat) => {
     let searchString = `?Longitude=${lon}&Latitude=${lat}`;
     navigation.push(`/${searchString}`);
-
-    const searchLong = searchParams.get('Longitude')
     const searchLat = searchParams.get('Latitude')
+    const searchLong = searchParams.get('Longitude')
+    const newUrl = window.location.origin + '/' + searchString;
+    window.location.href = newUrl;
+
   };
 
   const renderSuggestions = () => {

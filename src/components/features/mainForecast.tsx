@@ -23,7 +23,25 @@ const MainForecast: React.FC<MainForecastProps> = () => {
     async function fetchData() {
       try {
         // Get geolocation
-        const { latitude, longitude } = await getGeolocation();
+        // const { latitude, longitude } = await getGeolocation();
+        // Get search params
+        const searchParams = new URLSearchParams(window.location.search);
+        const searchLat = searchParams.get('Latitude');
+        const searchLong = searchParams.get('Longitude');
+
+        let latitude, longitude;
+
+        // Check if search params are available
+        if (searchLat && searchLong) {
+          latitude = parseFloat(searchLat);
+          longitude = parseFloat(searchLong);
+        } else {
+          // If no search params, get geolocation
+          const { latitude: geoLat, longitude: geoLong } = await getGeolocation();
+          latitude = geoLat;
+          longitude = geoLong;
+        }
+
 
         // Get weather data based on geolocation
         const { props: { currentWeather } } = await getWeatherData(latitude, longitude);
