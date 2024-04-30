@@ -1,9 +1,8 @@
 'use server'
 
-import { geolocationProvider } from "@/components/providers/geolocationProvider";
 import { getLocationData } from "@/lib/utils";
 
-export async function getWeatherData(lat, lon) {
+export async function getWeatherData(lat: number, lon: number): Promise<{ props: { currentWeather: CurrentWeatherData | null } }> {
   try {
     const currentWeather = await getLocationData(lat, lon);
     return { props: { currentWeather } };
