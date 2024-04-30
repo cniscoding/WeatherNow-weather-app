@@ -2,7 +2,7 @@
 
 import {useTheme} from "next-themes";
 import { useState } from "react";
-import { Switch } from "@/components/ui/Switch";
+import { Switch } from "@/components/ui/switch";
 
 export function TemperatureToggle({ onChange }) {
   const [isCelsius, setIsCelsius] = useState(true);

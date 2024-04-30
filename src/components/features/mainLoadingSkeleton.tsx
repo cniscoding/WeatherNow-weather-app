@@ -1,4 +1,8 @@
-const MainLoadingSkeleton: React.FC = () => {
+interface mainLoadingSkeletonProp {
+
+}
+
+const MainLoadingSkeleton: React.FC<mainLoadingSkeletonProp> = () => {
   return (
     <div className="main-forecast w-full flex flex-col p-2 shadow-2xl animate-pulse">
       <div className="h-8 bg-gray-300 rounded mb-2"></div>

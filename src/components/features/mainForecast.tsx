@@ -9,7 +9,7 @@ import { getWeatherData } from '@/app/api/route'
 // import { useWeatherData } from './useWeatherData';
 import ChartComponent from '@/components/features/Chart';
 import useWeatherData from '@/lib/weatherData'
-import mainLoadingSkeleton from '@/components/features/mainLoadingSkeleton'
+import MainLoadingSkeleton from '@/components/features/mainLoadingSkeleton'
 
 interface MainForecastProps {
   // currentWeather: any; 
@@ -72,13 +72,12 @@ const MainForecast: React.FC<MainForecastProps> = ({ isCelsius }) => {
   }
 
   if (loading || !currentWeather) {
-    return <mainLoadingSkeleton />; // Render loading skeleton while data is being fetched
+    return <MainLoadingSkeleton />; // 
   }
 
   if (!currentWeather) {
-    return null; // Render nothing if weather data is not available yet
+    return null; //
   }
-
 
   return (
     <Card className="main-forecast w-full flex flex-col p-2 shadow-2xl">
