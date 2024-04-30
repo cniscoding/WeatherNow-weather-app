@@ -1,12 +1,10 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { geolocationProvider } from '@/components/providers/geolocationProvider';
 import { roundTemperature, celsiusToFahrenheit } from '@/lib/utils';
+import { getWeatherData } from '@/lib/getWeatherData'
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Image from 'next/image';
-import { getWeatherData } from '@/app/api/route';
 import ChartComponent from '@/components/features/Chart';
-import useWeatherData from '@/lib/weatherData';
 import MainLoadingSkeleton from '@/components/features/mainLoadingSkeleton';
 
 interface MainForecastProps {
@@ -135,7 +133,7 @@ const MainForecast: React.FC<MainForecastProps> = ({ isCelsius }) => {
             </div>
           </div>
           <div className="mt-2">
-            <ChartComponent />
+            <ChartComponent isCelsius={isCelsius} currentWeather={currentWeather}/>
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { roundTemperature, celsiusToFahrenheit } from '../../lib/utils';
 import Image from 'next/image';
 
+
 interface favoriteProp {
   isCelsius: boolean;
 }

@@ -2,7 +2,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { geolocationProvider } from "@/components/providers/geolocationProvider";
-// import { useState, useEffect } from 'react';
 
 const apiKey = process.env.OPENWEATHERMAP_API_KEY;
 
@@ -50,7 +49,6 @@ export async function searchLocation(searchQuery: string) {
 };
 
 export async function getLocationData(latitude, longitude) {
-
   try {
     let lat = latitude
     let lon = longitude
@@ -77,4 +75,3 @@ export async function fetchAndSetCityWeather(lat: number,
   countryShortName: string) {
 
 }
-

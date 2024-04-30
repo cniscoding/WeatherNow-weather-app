@@ -6,16 +6,15 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import React, { useEffect, useState } from 'react';
-import { getWeatherData } from '@/app/api/route'
 import ExpandForecastLoadingSkeleton from '@/components/features/expandLoadingSkeleton'
 import Image from 'next/image';
+import { getWeatherData } from '@/lib/getWeatherData'
 
 interface ExpandForecastProps {
-  exposedDays: boolean[];
   isCelsius: boolean;
 }
 
-const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays, isCelsius }) => {
+const ExpandForecast: React.FC<ExpandForecastProps> = ({ isCelsius }) => {
   const [currentWeather, setCurrentWeather] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -86,7 +85,7 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays, isCelsius 
           {/* Top Container */}
         </div>
         {currentWeather.daily.slice(0, 5).map((day, index) => (
-          <div key={index} className={`${exposedDays && exposedDays[index] ? 'exposed' : ''} border-2 rounded-xl p-1`} onClick={() => toggleDayExposure(index)}>
+          <div key={index} className={`border-2 rounded-xl p-1`} onClick={() => toggleDayExposure(index)}>
             <div className="flex flex-col h-full justify-between">
               <div className="">
                 <CardTitle className='text-sm md:text-lg truncate'>{getDayOfWeek(day.dt)}</CardTitle>
@@ -117,7 +116,7 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays, isCelsius 
 
         {/* Bottom container */}
         {currentWeather.daily.slice(0, 5).map((day, index) => (
-          <div key={index} className={`forecast-item ${exposedDays && exposedDays[index] ? 'exposed' : ''}`} onClick={() => toggleDayExposure(index)}>
+          <div key={index} className={`forecast-item`} onClick={() => toggleDayExposure(index)}>
             <ul className="">
               <li className="border-b-2 w-full flex flex-col items-center">
                 {isCelsius

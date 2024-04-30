@@ -1,25 +1,13 @@
 'use client'
 
 import React, { useState } from 'react';
-import ChartComponent from '../components/features/Chart';
 import MainForecast from '../components/features/mainForecast';
 import ExpandForecast from '../components/features/expandForecast';
 import NavBar from '../components/features/navBar'
-import { getWeatherData } from "@/app/api/route"
-import { geolocationProvider } from "../components/providers/geolocationProvider"
 import { FavoriteForecast } from '../components/features/favoriteForecast'
 import { ThemeProvider } from '@/app/providers'
 import { ThemeSwitcher } from '@/components/features/ThemeSwitcher'
 import { TemperatureToggle } from '@/components/features/ temperatureToggle'
-
-interface HomeProps {
-  isCelsius: boolean;
-  exposedDays: boolean[];
-  toggleDayExposure: (index: number) => void;
-  // data: any;
-  longitude: string;
-  latitude: string;
-}
 
 interface ExpandForecast {
   isCelsius: boolean;
@@ -43,14 +31,13 @@ export default function Home() {
       disableTransitionOnChange
     >
       <main className="w-[95%] container flex flex-col h-screen p-1 pb-16 ">
-        {/* <div className="lg:py-1 flex items-center justify-between flex-col lg:flex-row"> */}
         <div className="flex flex-col md:flex-row-reverse md:justify-between">
           <div className="flex md:flex-col md:flex-row justify-end">
             <ThemeSwitcher />
             <TemperatureToggle onChange={toggleTemperatureUnit} />
           </div>
           <div className="w-full">
-          <NavBar />
+            <NavBar />
           </div>
         </div>
 
@@ -60,9 +47,6 @@ export default function Home() {
               <div className="pb-4">
                 <MainForecast isCelsius={isCelsius} />
               </div>
-              {/* <div className="pb-4">
-              <ChartComponent />
-            </div> */}
               <div className="pb-4 ">
                 <ExpandForecast isCelsius={isCelsius} />
               </div>
