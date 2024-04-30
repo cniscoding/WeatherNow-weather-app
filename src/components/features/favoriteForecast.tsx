@@ -10,12 +10,9 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({isCelsius}) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Simulating data fetching
     const fetchData = async () => {
       try {
-        // Simulate delay
         await new Promise(resolve => setTimeout(resolve, 500));
-        // Dummy data
         const dummyData = [
           {
             location: "Thailand",
@@ -144,16 +141,16 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({isCelsius}) => {
                     <CardTitle>
                       {
                         isCelsius
-                          ? `${roundTemperature(location.current.temp)} °C` // Display Celsius temperature
-                          : `${roundTemperature(celsiusToFahrenheit(location.current.temp))} °F` // Convert and display Fahrenheit temperature
+                          ? `${roundTemperature(location.current.temp)} °C` 
+                          : `${roundTemperature(celsiusToFahrenheit(location.current.temp))} °F` 
                       }
                     </CardTitle>
 
                     <CardDescription>
                       Feels like {
                         isCelsius
-                          ? `${roundTemperature(location.current.feels_like)} °C` // Display Celsius temperature
-                          : `${roundTemperature(celsiusToFahrenheit(location.current.feels_like))} °F` // Convert and display Fahrenheit temperature
+                          ? `${roundTemperature(location.current.feels_like)} °C` 
+                          : `${roundTemperature(celsiusToFahrenheit(location.current.feels_like))} °F` 
                       }.
                     </CardDescription>
                   </div>

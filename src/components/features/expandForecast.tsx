@@ -1,5 +1,5 @@
 'use client'
-import { roundTemperature, getDayOfWeek, celsiusToFahrenheit, fahrenheitToCelsius} from '@/lib/utils'
+import { roundTemperature, getDayOfWeek, celsiusToFahrenheit, fahrenheitToCelsius } from '@/lib/utils'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import {
   CardDescription,
@@ -8,7 +8,6 @@ import {
 import React, { useEffect, useState } from 'react';
 import { getWeatherData } from '@/app/api/route'
 import ExpandForecastLoadingSkeleton from '@/components/features/expandLoadingSkeleton'
-import { useTheme } from "next-themes";
 
 interface ExpandForecastProps {
   exposedDays: boolean[];
@@ -17,7 +16,6 @@ interface ExpandForecastProps {
 
 const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays, isCelsius }) => {
   const [currentWeather, setCurrentWeather] = useState<any>(null);
-  // const [isCelsius, setIsCelsius] = useState<boolean>(true);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -71,14 +69,12 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays, isCelsius 
     });
   }
   if (loading || !currentWeather) {
-    return <ExpandForecastLoadingSkeleton />; // Render loading skeleton while data is being fetched
+    return <ExpandForecastLoadingSkeleton />;
   }
 
   if (!currentWeather) {
-    return null; // Render nothing if weather data is not available yet
+    return null;
   }
-
-  const { theme } = useTheme();
 
   return (
     <div className="rounded-xl p-4 shadow-2xl">
@@ -86,11 +82,10 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays, isCelsius 
       <div className="pt-2 forecast-container grid grid-cols-6 gap-2">
         <div className="">
 
+          {/* Top Container */}
         </div>
-        {/* Top part */}
         {currentWeather.daily.slice(0, 5).map((day, index) => (
           <div key={index} className={`${exposedDays && exposedDays[index] ? 'exposed' : ''} border-2 rounded-xl p-1`} onClick={() => toggleDayExposure(index)}>
-            {/* <div>{getDayOfWeek(day.dt)}</div> */}
             <div className="flex flex-col h-full justify-between">
               <div className="">
                 <CardTitle className='text-sm md:text-lg truncate'>{getDayOfWeek(day.dt)}</CardTitle>
@@ -116,32 +111,32 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays, isCelsius 
           <li className="bg-gray-200 w-full flex justify-end dark:bg-gray-800">Feels</li>
         </ul>
 
-        {/* Bottom part */}
+        {/* Bottom container */}
         {currentWeather.daily.slice(0, 5).map((day, index) => (
           <div key={index} className={`forecast-item ${exposedDays && exposedDays[index] ? 'exposed' : ''}`} onClick={() => toggleDayExposure(index)}>
             <ul className="">
               <li className="border-b-2 w-full flex flex-col items-center">
                 {isCelsius
-                  ? `${roundTemperature(day.temp.min)} °C` // Display Celsius temperature
-                  : `${roundTemperature(celsiusToFahrenheit(day.temp.min))} °F` // Convert and display Fahrenheit temperature
+                  ? `${roundTemperature(day.temp.min)} °C`
+                  : `${roundTemperature(celsiusToFahrenheit(day.temp.min))} °F` 
                 }
               </li>
               <li className="border-b-2 w-full flex flex-col items-center bg-gray-200 dark:bg-gray-800">
                 {isCelsius
-                  ? `${roundTemperature(day.temp.max)} °C` // Display Celsius temperature
-                  : `${roundTemperature(celsiusToFahrenheit(day.temp.max))} °F` // Convert and display Fahrenheit temperature
+                  ? `${roundTemperature(day.temp.max)} °C` 
+                  : `${roundTemperature(celsiusToFahrenheit(day.temp.max))} °F` 
                 }
               </li>
               <li className="border-b-2 w-full flex flex-col items-center">
                 {isCelsius
-                  ? `${roundTemperature(day.feels_like.day)} °C` // Display Celsius temperature
-                  : `${roundTemperature(celsiusToFahrenheit(day.feels_like.day))} °F` // Convert and display Fahrenheit temperature
+                  ? `${roundTemperature(day.feels_like.day)} °C` 
+                  : `${roundTemperature(celsiusToFahrenheit(day.feels_like.day))} °F` 
                 }
               </li>
               <li className="border-b-2 w-full flex flex-col items-center bg-gray-200 dark:bg-gray-800">
                 {isCelsius
-                  ? `${roundTemperature(day.feels_like.night)} °C` // Display Celsius temperature
-                  : `${roundTemperature(celsiusToFahrenheit(day.feels_like.night))} °F` // Convert and display Fahrenheit temperature
+                  ? `${roundTemperature(day.feels_like.night)} °C` 
+                  : `${roundTemperature(celsiusToFahrenheit(day.feels_like.night))} °F` 
                 }
               </li>
             </ul>

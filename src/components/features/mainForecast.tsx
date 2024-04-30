@@ -1,12 +1,10 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import { geolocationProvider } from '@/components/providers/geolocationProvider';
-import { roundTemperature, celsiusToFahrenheit, fahrenheitToCelsius, fetchData, renderWeather } from '@/lib/utils';
-// import { roundTemperature, currentWeather, fetchData } from '../../lib/utils'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { roundTemperature, celsiusToFahrenheit } from '@/lib/utils';
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Image from 'next/image'
 import { getWeatherData } from '@/app/api/route'
-// import { useWeatherData } from './useWeatherData';
 import ChartComponent from '@/components/features/Chart';
 import useWeatherData from '@/lib/weatherData'
 import MainLoadingSkeleton from '@/components/features/mainLoadingSkeleton'
@@ -118,24 +116,21 @@ const MainForecast: React.FC<MainForecastProps> = ({ isCelsius }) => {
                   <CardTitle>
                     {
                       isCelsius
-                        ? `${roundTemperature(currentWeather.current.temp)} °C` // Display Celsius temperature
-                        : `${roundTemperature(celsiusToFahrenheit(currentWeather.current.temp))} °F` // Convert and display Fahrenheit temperature
+                        ? `${roundTemperature(currentWeather.current.temp)} °C` 
+                        : `${roundTemperature(celsiusToFahrenheit(currentWeather.current.temp))} °F`
                     }
                   </CardTitle>
                   <CardDescription>
                     Feels like {
                       isCelsius
-                        ? `${roundTemperature(currentWeather.current.feels_like)} °C` // Display Celsius temperature
-                        : `${roundTemperature(celsiusToFahrenheit(currentWeather.current.feels_like))} °F` // Convert and display Fahrenheit temperature
+                        ? `${roundTemperature(currentWeather.current.feels_like)} °C`
+                        : `${roundTemperature(celsiusToFahrenheit(currentWeather.current.feels_like))} °F` 
                     }.
                   </CardDescription>
                 </div>
               </div>
-              {/* <p>{currentWeather.current.weather[0].description}</p> */}
             </div>
-            {/* </CardContent> */}
           </div>
-          {/* testing */}
           <div className="mt-2">
             <ChartComponent />
           </div>
