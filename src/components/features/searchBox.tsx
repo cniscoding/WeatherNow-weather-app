@@ -1,11 +1,18 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Input } from "@/components/ui/input"
 import { searchLocation } from "@/app/api/searchLocation"
 import { Button } from "@/components/ui/button"
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { getWeatherData } from '@/app/api/route'
+import { useRouter, useSearchParams } from 'next/navigation';
+
+interface Location {
+  name: string;
+  state: string;
+  country: string;
+  lon: number;
+  lat: number;
+}
 
 const SearchBox = () => {
   const [query, setQuery] = useState('');
@@ -36,11 +43,11 @@ const SearchBox = () => {
     }
   };
 
-  const handleInput = (e) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
-  const handleItemClick = (lon, lat) => {
+  const handleItemClick = (lon:number, lat:number) => {
     let searchString = `?Longitude=${lon}&Latitude=${lat}`;
     navigation.push(`/${searchString}`);
     const searchLat = searchParams.get('Latitude')
@@ -55,7 +62,7 @@ const SearchBox = () => {
       return <li>No results found</li>;
     }
 
-    return results.map((result, index) => (
+    return results.map((result : Location, index:number) => (
       <li key={index} onClick={() => handleItemClick(result.lon, result.lat)}>
         {result.name || ''}{result.name && (result.state || result.country) && ', '}
         {result.state || ''}{result.state && result.country && ', '}
@@ -64,7 +71,7 @@ const SearchBox = () => {
     ));
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = (e :  React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
 

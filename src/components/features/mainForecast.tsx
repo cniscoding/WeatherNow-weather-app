@@ -29,9 +29,12 @@ const MainForecast: React.FC<MainForecastProps> = ({ isCelsius }) => {
           latitude = parseFloat(searchLat);
           longitude = parseFloat(searchLong);
         } else {
-          const { latitude: geoLat, longitude: geoLong } = await getGeolocation();
-          latitude = geoLat;
-          longitude = geoLong;
+          // const { latitude: geoLat, longitude: geoLong } = await getGeolocation();
+          // latitude = geoLat;
+          // longitude = geoLong;
+          const geoLocation = await getGeolocation();
+          latitude = (geoLocation as { latitude: number }).latitude;
+          longitude = (geoLocation as { longitude: number }).longitude;
         }
 
         // Get weather data based on geolocation

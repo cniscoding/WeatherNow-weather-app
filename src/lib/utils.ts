@@ -1,7 +1,6 @@
 
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { geolocationProvider } from "@/components/providers/geolocationProvider";
 
 const apiKey = process.env.OPENWEATHERMAP_API_KEY;
 
@@ -48,7 +47,7 @@ export async function searchLocation(searchQuery: string) {
   }
 };
 
-export async function getLocationData(latitude, longitude) {
+export async function getLocationData(latitude :number, longitude:number) {
   try {
     let lat = latitude
     let lon = longitude
@@ -60,8 +59,6 @@ export async function getLocationData(latitude, longitude) {
 
     const res = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${exclude}&units=${units}&appid=${apiKey}`, { cache: 'no-store' });
     const locationsData = await res.json();
-
-    // console.log('Weather data:', projects);
     return locationsData;
   } catch (error) {
     console.error('Error fetching weather data:', error);

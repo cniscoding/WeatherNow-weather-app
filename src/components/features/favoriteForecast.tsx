@@ -3,11 +3,23 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { roundTemperature, celsiusToFahrenheit } from '../../lib/utils';
 import Image from 'next/image';
 
-
 interface favoriteProp {
   isCelsius: boolean;
 }
-export const FavoriteForecast: React.FC<favoriteProp> = ({isCelsius}) => {
+
+interface Location {
+  location: string;
+  current: {
+    weather: {
+      icon: string;
+      description: string;
+    }[];
+    temp: number;
+    feels_like: number;
+  };
+}
+
+export const FavoriteForecast: React.FC<favoriteProp> = ({ isCelsius }) => {
   const [currentWeather, setCurrentWeather] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -121,7 +133,7 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({isCelsius}) => {
     <Card className="w-full flex flex-col p-4 shadow-md">
       <CardTitle className="">Favorites</CardTitle>
       <div className="">
-        {currentWeather.map((location, index) => (
+        {currentWeather.map((location: Location, index: number) => (
           <div className="rounded-xl flex flex-col m-2 shadow-lg" key={index}>
             <CardHeader className="flex flex-col justify-center items-center p-1">
               <CardTitle>{location.location}</CardTitle>
@@ -146,16 +158,16 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({isCelsius}) => {
                     <CardTitle>
                       {
                         isCelsius
-                          ? `${roundTemperature(location.current.temp)} °C` 
-                          : `${roundTemperature(celsiusToFahrenheit(location.current.temp))} °F` 
+                          ? `${roundTemperature(location.current.temp)} °C`
+                          : `${roundTemperature(celsiusToFahrenheit(location.current.temp))} °F`
                       }
                     </CardTitle>
 
                     <CardDescription>
                       Feels like {
                         isCelsius
-                          ? `${roundTemperature(location.current.feels_like)} °C` 
-                          : `${roundTemperature(celsiusToFahrenheit(location.current.feels_like))} °F` 
+                          ? `${roundTemperature(location.current.feels_like)} °C`
+                          : `${roundTemperature(celsiusToFahrenheit(location.current.feels_like))} °F`
                       }.
                     </CardDescription>
                   </div>

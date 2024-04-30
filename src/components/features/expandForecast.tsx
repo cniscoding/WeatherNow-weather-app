@@ -1,6 +1,5 @@
 'use client'
 import { roundTemperature, getDayOfWeek, celsiusToFahrenheit } from '@/lib/utils'
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import {
   CardDescription,
   CardTitle,
@@ -14,6 +13,28 @@ interface ExpandForecastProps {
   isCelsius: boolean;
 }
 
+interface Weather {
+  icon: string;
+}
+
+interface WeatherDay {
+  dt: number;
+  summary: string;
+  weather: Weather[];
+  feels_like: FeelsLike;
+  temp: Temp;
+}
+
+interface FeelsLike {
+  day: number;
+  night: number;
+}
+
+interface Temp {
+  max: number;
+  min: number;
+}
+
 const ExpandForecast: React.FC<ExpandForecastProps> = ({ isCelsius }) => {
   const [currentWeather, setCurrentWeather] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -24,16 +45,20 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ isCelsius }) => {
         const searchParams = new URLSearchParams(window.location.search);
         const searchLat = searchParams.get('Latitude');
         const searchLong = searchParams.get('Longitude');
-        let latitude, longitude;
+        let latitude: number;
+        let longitude: number;
 
         // Check if search params are available
         if (searchLat && searchLong) {
           latitude = parseFloat(searchLat);
           longitude = parseFloat(searchLong);
         } else {
-          const { latitude: geoLat, longitude: geoLong } = await getGeolocation();
-          latitude = geoLat;
-          longitude = geoLong;
+          // const { latitude: geoLat, longitude: geoLong } = await getGeolocation();
+          // latitude = geoLat;
+          // longitude = geoLong;
+          const geoLocation = await getGeolocation();
+          latitude = (geoLocation as { latitude: number }).latitude;
+          longitude = (geoLocation as { longitude: number }).longitude;
         }
 
         // Get weather data based on geolocation
@@ -84,8 +109,8 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ isCelsius }) => {
 
           {/* Top Container */}
         </div>
-        {currentWeather.daily.slice(0, 5).map((day, index) => (
-          <div key={index} className={`border-2 rounded-xl p-1`} onClick={() => toggleDayExposure(index)}>
+        {currentWeather.daily.slice(0, 5).map((day: WeatherDay, index: number) => (
+          <div key={index} className={`border-2 rounded-xl p-1`}>
             <div className="flex flex-col h-full justify-between">
               <div className="">
                 <CardTitle className='text-sm md:text-lg truncate'>{getDayOfWeek(day.dt)}</CardTitle>
@@ -108,35 +133,35 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ isCelsius }) => {
       </div>
       <div className="forecast-container grid grid-cols-6 gap-2">
         <ul className="flex flex-col items-end justify-center">
-          <li>Low </li>
-          <li className="bg-gray-200 w-full flex justify-end dark:bg-gray-800">High</li>
-          <li>Feels</li>
-          <li className="bg-gray-200 w-full flex justify-end dark:bg-gray-800">Feels</li>
+          <li className="truncate sm:w-auto flex h-full justify-end text-xs md:text-sm items-center">Low </li>
+          <li className="truncate bg-gray-200 h-full w-full flex justify-end dark:bg-gray-800 text-xs md:text-sm items-center">High</li>
+          <li className="truncate sm:w-auto flex h-full justify-end text-xs md:text-sm items-center">Feels Day</li>
+          <li className="truncate bg-gray-200 h-full w-full flex justify-end dark:bg-gray-800 text-xs md:text-sm items-center">Feels Night</li>
         </ul>
 
         {/* Bottom container */}
-        {currentWeather.daily.slice(0, 5).map((day, index) => (
-          <div key={index} className={`forecast-item`} onClick={() => toggleDayExposure(index)}>
+        {currentWeather.daily.slice(0, 5).map((day: WeatherDay, index: number) => (
+          <div key={index} className={`forecast-item`}>
             <ul className="">
-              <li className="border-b-2 w-full flex flex-col items-center">
+              <li className="border-b-2 w-full flex flex-col items-center text-xs md:text-sm">
                 {isCelsius
                   ? `${roundTemperature(day.temp.min)} °C`
                   : `${roundTemperature(celsiusToFahrenheit(day.temp.min))} °F`
                 }
               </li>
-              <li className="border-b-2 w-full flex flex-col items-center bg-gray-200 dark:bg-gray-800">
+              <li className="border-b-2 w-full flex flex-col items-center bg-gray-200 dark:bg-gray-800 text-xs md:text-sm">
                 {isCelsius
                   ? `${roundTemperature(day.temp.max)} °C`
                   : `${roundTemperature(celsiusToFahrenheit(day.temp.max))} °F`
                 }
               </li>
-              <li className="border-b-2 w-full flex flex-col items-center">
+              <li className="border-b-2 w-full flex flex-col items-center text-xs md:text-sm">
                 {isCelsius
                   ? `${roundTemperature(day.feels_like.day)} °C`
                   : `${roundTemperature(celsiusToFahrenheit(day.feels_like.day))} °F`
                 }
               </li>
-              <li className="border-b-2 w-full flex flex-col items-center bg-gray-200 dark:bg-gray-800">
+              <li className="border-b-2 w-full flex flex-col items-center bg-gray-200 dark:bg-gray-800 text-xs md:text-sm">
                 {isCelsius
                   ? `${roundTemperature(day.feels_like.night)} °C`
                   : `${roundTemperature(celsiusToFahrenheit(day.feels_like.night))} °F`

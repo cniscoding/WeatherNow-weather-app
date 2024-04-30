@@ -4,7 +4,11 @@ import {useTheme} from "next-themes";
 import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
 
-export function TemperatureToggle({ onChange }) {
+interface TemperatureToggleProps {
+  onChange: (isCelsius: boolean) => void;
+}
+
+export function TemperatureToggle({ onChange }: TemperatureToggleProps) {
   const [isCelsius, setIsCelsius] = useState(true);
   const { theme, setTheme } = useTheme()
 
