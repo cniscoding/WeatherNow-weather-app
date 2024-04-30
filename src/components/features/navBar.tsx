@@ -1,6 +1,5 @@
 'use client'
-import React, { useState } from 'react';
-import { searchLocation } from '../../lib/utils';
+import React from 'react';
 import SearchBox from "./searchBox"
 
 interface navBarProps {
@@ -8,13 +7,9 @@ interface navBarProps {
 }
 
 const navBar: React.FC<navBarProps> = ({ }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [weatherData, setWeatherData] = useState(null);
-
   return (
     <div>
-
-      <nav className="bg-gray-300 text-black py-4 px-6 flex justify-between items-center flex-col rounded-xl shadow-md">
+      <nav className="bg-orange-200 text-black py-1 md:py-2 px-6 flex justify-between items-center flex-col rounded-xl shadow-md">
         <div className="">
           <SearchBox />
         </div>

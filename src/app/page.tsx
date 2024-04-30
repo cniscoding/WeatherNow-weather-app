@@ -25,10 +25,10 @@ interface HomeProps {
 export default function Home() {
 
   return (
-    <main className="w-[95%] container flex flex-col h-screen p-2 pb-16 pt-4">
+    <main className="w-[95%] container flex flex-col h-screen p-1 pb-16">
 
       {/* Navbar */}
-      <div className="py-4">
+      <div className="py-1 md:py-2">
         <NavBar />
       </div>
 
