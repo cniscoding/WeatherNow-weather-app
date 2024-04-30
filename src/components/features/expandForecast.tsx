@@ -82,7 +82,7 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays, isCelsius 
 
   return (
     <div className="rounded-xl p-4 shadow-2xl">
-      <CardTitle className="">5 day forecast</CardTitle>
+      <CardTitle className="">5 Day Forecast</CardTitle>
       <div className="pt-2 forecast-container grid grid-cols-6 gap-2">
         <div className="">
 

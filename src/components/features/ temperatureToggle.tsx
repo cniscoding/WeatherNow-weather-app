@@ -11,11 +11,6 @@ export function TemperatureToggle({ onChange }) {
   const toggleTemperatureUnit = () => {
     setIsCelsius((prev) => !prev);
     onChange(!isCelsius); // Notify parent component of the change
-    if (theme === 'light') {
-      setTheme('dark');
-    } else {
-      setTheme('light');
-    }
   };
 
   return (
