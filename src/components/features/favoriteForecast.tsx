@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { roundTemperature, celsiusToFahrenheit, fahrenheitToCelsius } from '../../lib/utils';
+import { roundTemperature, celsiusToFahrenheit } from '../../lib/utils';
+import Image from 'next/image';
 
 interface favoriteProp {
   isCelsius: boolean;
@@ -130,10 +131,13 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({isCelsius}) => {
                 <div className="flex flex-col">
                   <div>
                     {location.current.weather[0].icon && (
-                      <img
+                      // <img
+                      <Image
                         alt={location.current.weather[0].description}
                         src={`https://openweathermap.org/img/wn/${location.current.weather[0].icon}@2x.png`}
                         className="select-none"
+                        width={100}
+                        height={100}
                       />
                     )}
                   </div>

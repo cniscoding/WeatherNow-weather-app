@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { geolocationProvider } from '@/components/providers/geolocationProvider';
 import { roundTemperature, celsiusToFahrenheit } from '@/lib/utils';
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import Image from 'next/image'
-import { getWeatherData } from '@/app/api/route'
+import Image from 'next/image';
+import { getWeatherData } from '@/app/api/route';
 import ChartComponent from '@/components/features/Chart';
-import useWeatherData from '@/lib/weatherData'
-import MainLoadingSkeleton from '@/components/features/mainLoadingSkeleton'
+import useWeatherData from '@/lib/weatherData';
+import MainLoadingSkeleton from '@/components/features/mainLoadingSkeleton';
 
 interface MainForecastProps {
   // currentWeather: any; 
@@ -70,7 +70,7 @@ const MainForecast: React.FC<MainForecastProps> = ({ isCelsius }) => {
   }
 
   if (loading || !currentWeather) {
-    return <MainLoadingSkeleton />; // 
+    return <MainLoadingSkeleton />; 
   }
 
   if (!currentWeather) {
@@ -105,10 +105,13 @@ const MainForecast: React.FC<MainForecastProps> = ({ isCelsius }) => {
               <div className="weather-details flex flex-row">
                 <div className={`relative invert-0 dark:invert`}>
                   {currentWeather.current.weather[0].icon && (
-                    <img
+                    // <img
+                    <Image
                       alt={currentWeather.current.weather[0].description.toString()}
                       src={`https://openweathermap.org/img/wn/${currentWeather.current.weather[0].icon}@2x.png`}
                       className="select-none"
+                      width={100}
+                      height={100}
                     />
                   )}
                 </div>

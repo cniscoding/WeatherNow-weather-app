@@ -1,5 +1,5 @@
 'use client'
-import { roundTemperature, getDayOfWeek, celsiusToFahrenheit, fahrenheitToCelsius } from '@/lib/utils'
+import { roundTemperature, getDayOfWeek, celsiusToFahrenheit } from '@/lib/utils'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import {
   CardDescription,
@@ -8,6 +8,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { getWeatherData } from '@/app/api/route'
 import ExpandForecastLoadingSkeleton from '@/components/features/expandLoadingSkeleton'
+import Image from 'next/image';
 
 interface ExpandForecastProps {
   exposedDays: boolean[];
@@ -49,7 +50,7 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays, isCelsius 
       }
     }
     fetchData();
-  }, []); // Empty dependency array ensures this effect runs only once on component mount
+  }, []);
 
   async function getGeolocation() {
     return new Promise((resolve, reject) => {
@@ -93,10 +94,15 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays, isCelsius 
               </div>
               <div className={`relative invert-0 dark:invert-100`}>
                 {day.weather[0].icon && (
-                  <img
+                  // <img
+                  <Image
                     src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                    alt={day.summary}
                     className="select-none"
+                    width={300}
+                    height={200}
                   />
+                  // />
                 )}
               </div>
             </div>
@@ -118,25 +124,25 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays, isCelsius 
               <li className="border-b-2 w-full flex flex-col items-center">
                 {isCelsius
                   ? `${roundTemperature(day.temp.min)} °C`
-                  : `${roundTemperature(celsiusToFahrenheit(day.temp.min))} °F` 
+                  : `${roundTemperature(celsiusToFahrenheit(day.temp.min))} °F`
                 }
               </li>
               <li className="border-b-2 w-full flex flex-col items-center bg-gray-200 dark:bg-gray-800">
                 {isCelsius
-                  ? `${roundTemperature(day.temp.max)} °C` 
-                  : `${roundTemperature(celsiusToFahrenheit(day.temp.max))} °F` 
+                  ? `${roundTemperature(day.temp.max)} °C`
+                  : `${roundTemperature(celsiusToFahrenheit(day.temp.max))} °F`
                 }
               </li>
               <li className="border-b-2 w-full flex flex-col items-center">
                 {isCelsius
-                  ? `${roundTemperature(day.feels_like.day)} °C` 
-                  : `${roundTemperature(celsiusToFahrenheit(day.feels_like.day))} °F` 
+                  ? `${roundTemperature(day.feels_like.day)} °C`
+                  : `${roundTemperature(celsiusToFahrenheit(day.feels_like.day))} °F`
                 }
               </li>
               <li className="border-b-2 w-full flex flex-col items-center bg-gray-200 dark:bg-gray-800">
                 {isCelsius
-                  ? `${roundTemperature(day.feels_like.night)} °C` 
-                  : `${roundTemperature(celsiusToFahrenheit(day.feels_like.night))} °F` 
+                  ? `${roundTemperature(day.feels_like.night)} °C`
+                  : `${roundTemperature(celsiusToFahrenheit(day.feels_like.night))} °F`
                 }
               </li>
             </ul>
