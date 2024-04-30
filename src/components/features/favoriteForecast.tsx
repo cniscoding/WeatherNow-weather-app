@@ -1,101 +1,127 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import React, { useEffect, useState } from 'react';
-import { getWeatherData } from '@/app/api/route'
-import { roundTemperature } from '../../lib/utils'
-
-interface Coordinates {
-  latitude: string;
-  longitude: string;
-}
-
-interface FavoriteLocation {
-  location: string;
-  coordinates: Coordinates;
-}
-
-// interface WeatherData {
-//   timezone: string;
-//   daily: { summary: string }[];
-//   current: {
-//     temp: number;
-//     feels_like: number;
-//     weather: { description: string; icon: string }[];
-//   };
-// }
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { roundTemperature } from '../../lib/utils';
 
 export const FavoriteForecast: React.FC = () => {
   const [currentWeather, setCurrentWeather] = useState<any>(null);
   const [isCelsius, setIsCelsius] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const favoriteList = [
-    {
-      location: "Thailand",
-      coordinates: {
-        latitude: 15.87,
-        longitude: 100.9925
-      },
-      timezone: "Asia/Bangkok",
-      current: {
-        temp: 22,
-        feels_like: 20,
-        weather: [
+  useEffect(() => {
+    // Simulating data fetching
+    const fetchData = async () => {
+      try {
+        // Simulate delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Dummy data
+        const dummyData = [
           {
-            id: 801,
-            main: "Clouds",
-            description: "few clouds",
-            icon: "02d"
-          }
-        ]
-      }
-    },
-    {
-      location: "Las Vegas, NV",
-      coordinates: {
-        latitude: 36.188110,
-        longitude: -115.176468
-      },
-      timezone: "America/Los_Angeles",
-      current: {
-        temp: 31,
-        feels_like: 34,
-        weather: [
+            location: "Thailand",
+            coordinates: {
+              latitude: 15.87,
+              longitude: 100.9925
+            },
+            timezone: "Asia/Bangkok",
+            current: {
+              temp: 22,
+              feels_like: 20,
+              weather: [
+                {
+                  id: 801,
+                  main: "Clouds",
+                  description: "few clouds",
+                  icon: "02d"
+                }
+              ]
+            }
+          },
           {
-            id: 801,
-            main: "Clear Sky",
-            description: "Clear Sky",
-            icon: "01d"
-          }
-        ]
-      }
-    },
-    {
-      location: "New Zealand",
-      coordinates: {
-        latitude: -40.9006,
-        longitude: 174.8860
-      },
-      timezone: "Pacific/Auckland",
-      current: {
-        temp: 8,
-        feels_like: 8,
-        weather: [
+            location: "Las Vegas, NV",
+            coordinates: {
+              latitude: 36.188110,
+              longitude: -115.176468
+            },
+            timezone: "America/Los_Angeles",
+            current: {
+              temp: 31,
+              feels_like: 34,
+              weather: [
+                {
+                  id: 801,
+                  main: "Clear Sky",
+                  description: "Clear Sky",
+                  icon: "01d"
+                }
+              ]
+            }
+          },
           {
-            id: 800,
-            main: "Clear",
-            description: "Shower Rain",
-            icon: "09d"
+            location: "New Zealand",
+            coordinates: {
+              latitude: -40.9006,
+              longitude: 174.8860
+            },
+            timezone: "Pacific/Auckland",
+            current: {
+              temp: 8,
+              feels_like: 8,
+              weather: [
+                {
+                  id: 800,
+                  main: "Clear",
+                  description: "Shower Rain",
+                  icon: "09d"
+                }
+              ]
+            }
           }
-        ]
+        ];
+        setCurrentWeather(dummyData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+        setLoading(false);
       }
-    }
-  ];
+    };
 
+    fetchData();
+  }, []);
+
+  if (loading) {
+    // Render loading skeleton
+    return (
+      <Card className="w-full flex flex-col p-4 shadow-md">
+        <CardTitle className="animate-pulse">Favorites</CardTitle>
+        {[1, 2, 3].map((_, index) => (
+          <div className="rounded-xl flex flex-col m-2 shadow-lg" key={index}>
+            <CardHeader className="flex flex-col justify-center items-center p-1">
+              <div className="h-4 bg-gray-300 rounded w-3/4 mb-1 animate-pulse"></div>
+              <div className="h-4 bg-gray-300 rounded w-3/4 animate-pulse"></div>
+            </CardHeader>
+            <CardContent className="flex-grow">
+              <div className="flex flex-col justify-center items-center">
+                <div className="flex flex-col">
+                  <div className="h-16 w-16 bg-gray-300 rounded-full animate-pulse"></div>
+                  <div className="temperature flex items-center justify-center flex-col">
+                    <div className="h-6 bg-gray-300 rounded w-16 mb-1 animate-pulse"></div>
+                    <div className="h-4 bg-gray-300 rounded w-20 animate-pulse"></div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </div>
+        ))}
+      </Card>
+    );
+  }
+
+  // Render actual content when data is loaded
   return (
-    <Card className="w-full flex flex-col border-2 rounded-x p-4">
+    <Card className="w-full flex flex-col p-4 shadow-md">
       <CardTitle className="">Favorites</CardTitle>
       <div className="">
-        {favoriteList.map((location, index) => (
-          <div className="border-2 rounded-xl flex flex-col m-2" key={index}>
+        {currentWeather.map((location, index) => (
+          <div className="rounded-xl flex flex-col m-2 shadow-lg" key={index}>
             <CardHeader className="flex flex-col justify-center items-center p-1">
               <CardTitle>{location.location}</CardTitle>
               <CardDescription><p>{location.current.weather[0].description}</p></CardDescription>
@@ -103,7 +129,6 @@ export const FavoriteForecast: React.FC = () => {
             <CardContent className="flex-grow">
               <div className="flex flex-col justify-center items-center">
                 <div className="flex flex-col">
-                  {/* <div className={`relative invert-0 dark:invert mb-2`}> */}
                   <div>
                     {location.current.weather[0].icon && (
                       <img

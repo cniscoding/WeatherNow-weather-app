@@ -7,29 +7,49 @@ import {
 } from "@/components/ui/card"
 import React, { useEffect, useState } from 'react';
 import { getWeatherData } from '@/app/api/route'
+import ExpandForecastLoadingSkeleton from '@/components/features/expandLoadingSkeleton'
 
 interface ExpandForecastProps {
-
   exposedDays: boolean[];
-
 }
 
 const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays }) => {
   const [currentWeather, setCurrentWeather] = useState<any>(null);
   const [isCelsius, setIsCelsius] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const { latitude, longitude } = await getGeolocation();
+        const searchParams = new URLSearchParams(window.location.search);
+        const searchLat = searchParams.get('Latitude');
+        const searchLong = searchParams.get('Longitude');
+        let latitude, longitude;
+
+        // Check if search params are available
+        if (searchLat && searchLong) {
+          latitude = parseFloat(searchLat);
+          longitude = parseFloat(searchLong);
+        } else {
+          const { latitude: geoLat, longitude: geoLong } = await getGeolocation();
+          latitude = geoLat;
+          longitude = geoLong;
+        }
+
+        // Get weather data based on geolocation
         const { props: { currentWeather } } = await getWeatherData(latitude, longitude);
+        console.log('Weather data:', currentWeather);
+
+        // Update state with weather data
         setCurrentWeather(currentWeather);
+        setLoading(false)
       } catch (error) {
         console.error('Error fetching weather data:', error);
+        setLoading(false)
       }
     }
     fetchData();
-  }, []);
+  }, []); // Empty dependency array ensures this effect runs only once on component mount
 
   async function getGeolocation() {
     return new Promise((resolve, reject) => {
@@ -40,69 +60,24 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays }) => {
           resolve({ latitude, longitude });
         },
         (error) => {
-          console.error('Error getting location:', error);
-          reject(error);
+          const defaultLat = 49.2827;
+          const defaultLong = -123.1207;
+          console.log('Using default coordinates. Latitude:', defaultLat, 'Longitude:', defaultLong);
+          resolve({ latitude: defaultLat, longitude: defaultLong });
         }
       );
     });
   }
+  if (loading || !currentWeather) {
+    return <ExpandForecastLoadingSkeleton />; // Render loading skeleton while data is being fetched
+  }
+
   if (!currentWeather) {
-    return null; // 
+    return null; // Render nothing if weather data is not available yet
   }
 
   return (
-    // <div className="border-2 rounded-xl p-4">
-    //   <CardTitle className="">5 day forecast</CardTitle>
-    //   <CardDescription></CardDescription>
-    //   <div className="pt-2 forecast-container grid grid-cols-1 md:flex md:justify-center">
-    //     <Accordion type="single" collapsible className="flex flex-col sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-    //     {currentWeather.daily.slice(0, 5).map((day, index) => (
-    //         <div key={index} className={`forecast-item ${exposedDays && exposedDays[index] ? 'exposed' : ''}`} onClick={() => toggleDayExposure(index)}>
-    //           <AccordionItem value={`item-${index}`}>
-    //             <AccordionTrigger className="flex flex-col border-2 rounded-xl h-48">
-    //               <div>{getDayOfWeek(day.dt)}</div>
-
-    //               <div className="flex flex-col justify-center items-center">
-    //                 <div className={`relative invert-0 dark:invert`}>
-    //                   {day.weather[0].icon && (
-    //                     <img
-    //                       // alt={day.weather.description.toString()}
-    //                       src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
-    //                       className="select-none"
-    //                     />
-    //                   )}
-    //                 </div>
-    //                 <div>
-    //                   Low: {roundTemperature(day.temp.min)} °C | High: {roundTemperature(day.temp.max)} °C
-    //                 </div>
-    //               </div>
-    //             </AccordionTrigger>
-    //             <AccordionContent className="flex flex-col justify-center items-center">
-    //               <div>
-    //                 <div>{day.forecastType}</div>
-    //                 <div className="detailed-info">
-    //                   <div className="weather-info">
-    //                     <div className="weather-details">
-    //                       <div className="temperature">
-    //                         {/* <p>
-    //                           {currentWeather.temperature}°{isCelsius ? 'C' : 'F'}
-    //                         </p> */}
-    //                         <p>Feels like Low: {roundTemperature(day.feels_like.day)} °C | High: {roundTemperature(day.feels_like.night)}°{isCelsius ? 'C' : 'F'}</p>
-    //                       </div>
-    //                       <p>{day.summary}</p>
-    //                     </div>
-    //                   </div>
-    //                 </div>
-    //               </div>
-    //             </AccordionContent>
-    //           </AccordionItem>
-    //         </div>
-    //       ))}
-    //     </Accordion>
-    //   </div>
-    // </div>
-
-    <div className="border-2 rounded-xl p-4">
+    <div className="rounded-xl p-4 shadow-2xl">
       <CardTitle className="">5 day forecast</CardTitle>
       <div className="pt-2 forecast-container grid grid-cols-6 gap-2">
         <div className="">
@@ -110,7 +85,6 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ exposedDays }) => {
         </div>
         {/* Top part */}
         {currentWeather.daily.slice(0, 5).map((day, index) => (
-
           <div key={index} className={`${exposedDays && exposedDays[index] ? 'exposed' : ''} border-2 rounded-xl p-1`} onClick={() => toggleDayExposure(index)}>
             {/* <div>{getDayOfWeek(day.dt)}</div> */}
             <div className="flex flex-col h-full justify-between">

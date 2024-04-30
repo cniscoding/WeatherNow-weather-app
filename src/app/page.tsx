@@ -43,11 +43,10 @@ export default function Home() {
             {/* <div className="pb-4">
               <ChartComponent />
             </div> */}
-            <div className="pb-4">
+            <div className="pb-4 ">
               <ExpandForecast />
             </div>
           </div>
-
           {/* Sidebar for Favorites */}
           <div className="lg:col-span-1 hidden lg:block">
             <div className="pb-4">
@@ -55,7 +54,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
         {/* Sidebar for Favorites on small screens */}
         <div className="lg:hidden pb-4">
           <FavoriteForecast />
