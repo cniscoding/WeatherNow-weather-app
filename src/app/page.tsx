@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import ChartComponent from '../components/features/Chart';
 import MainForecast from '../components/features/mainForecast';
 import ExpandForecast from '../components/features/expandForecast';
@@ -25,7 +25,7 @@ interface ExpandForecast {
   isCelsius: boolean;
 }
 
-interface FavoriteForecast{
+interface FavoriteForecast {
   isCelsius: boolean;
 }
 export default function Home() {
@@ -43,30 +43,34 @@ export default function Home() {
       disableTransitionOnChange
     >
       <main className="w-[95%] container flex flex-col h-screen p-1 pb-16 ">
-        <div className="py-1 md:py-2">
+        {/* <div className="lg:py-1 flex items-center justify-between flex-col lg:flex-row"> */}
+        <div className="flex flex-col md:flex-row-reverse md:justify-between">
+          <div className="flex md:flex-col md:flex-row justify-end">
+            <ThemeSwitcher />
+            <TemperatureToggle onChange={toggleTemperatureUnit} />
+          </div>
+          <div className="w-full">
           <NavBar />
-          <ThemeSwitcher />
-          <TemperatureToggle onChange={toggleTemperatureUnit}/>
+          </div>
         </div>
 
         <div className="flex-grow">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-
             <div className="lg:col-span-2">
               <div className="pb-4">
-                <MainForecast isCelsius={isCelsius}/>
+                <MainForecast isCelsius={isCelsius} />
               </div>
               {/* <div className="pb-4">
               <ChartComponent />
             </div> */}
               <div className="pb-4 ">
-                <ExpandForecast isCelsius={isCelsius}/>
+                <ExpandForecast isCelsius={isCelsius} />
               </div>
             </div>
 
             <div className="lg:col-span-1 hidden lg:block">
               <div className="pb-4">
-                <FavoriteForecast isCelsius={isCelsius}/>
+                <FavoriteForecast isCelsius={isCelsius} />
               </div>
             </div>
           </div>

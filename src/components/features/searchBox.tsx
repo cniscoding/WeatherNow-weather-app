@@ -24,7 +24,6 @@ const SearchBox = () => {
         const data = await searchLocation(query);
         setResults(data);
         setStatus('OK');
-        console.log("Response:", data); // Log the response
       } else {
         setResults([]);
         setStatus('');
@@ -75,44 +74,36 @@ const SearchBox = () => {
 
   const handleInputBlur = () => {
     setIsInputFocused(false);
+    setResults([]);
+    setStatus('NotOK');
   };
 
-  // const handleSuggestionsBlur = () => {
-  //   // Reset results and status when suggestions area loses focus
-  //   setIsInputFocused(false);
-  //   setResults([]);
-  //   setStatus('NotOK');
-  // };
-
   return (
-    <form onSubmit={handleSearch} className="relative w-full md:w-auto min-w-[280px] text-black flex items-center flex-col justify-center md:flex-row">
-      <Input
-        className="text-black m-2 sm:min-w-[400px]"
-        type="text"
-        placeholder="Search City"
-        value={query}
-        onChange={handleInput}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-      />
-      <Button onClick={handleSearchClick} disabled={loading} className="w-full">
-        {loading ? 'Searching...' : 'Search'}
-      </Button>
+      <form onSubmit={handleSearch} className="relative w-full text-black flex items-center">
+        <Input
+          className="text-black m-2 border-2 border-[black] dark:border-[white] w-[85%]"
+          type="text"
+          placeholder="Search City"
+          value={query}
+          onChange={handleInput}
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+        />
+        <Button onClick={handleSearchClick} disabled={loading} className="" onBlur={handleInputBlur}>
+          {loading ? 'Searching...' : 'Search'}
+        </Button>
 
-      {(status === 'OK' || isInputFocused) && (
-        <div
-          className="absolute top-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 w-full p-1"
-          // onBlur={handleSuggestionsBlur} 
-        >
-          <p className="bg-green-200 font-bold">Search Results</p>
-          <ul className="">
-            {renderSuggestions()}
-          </ul>
-        </div>
-      )}
-
-
-    </form>
+        {(status === 'OK' || isInputFocused) && (
+          <div
+            className="absolute top-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 w-full p-1"
+          >
+            <p className="bg-green-200 font-bold">Search Results</p>
+            <ul className="">
+              {renderSuggestions()}
+            </ul>
+          </div>
+        )}
+      </form>
   );
 };
 

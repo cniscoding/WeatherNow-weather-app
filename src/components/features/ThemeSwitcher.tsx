@@ -24,7 +24,7 @@ export function ThemeSwitcher() {
 
   return (
     <div className="flex items-center justify-end">
-      The current theme is:{theme}
+       <p className="truncate text-xs md:text-md lg:text-lg">Theme : </p><strong className="text-xs md:text-md lg:text-lg m-1">{theme?.toUpperCase()}</strong>
       <Switch className="m-2" onClick={toggleTheme}>Toggle Theme</Switch>
     </div>
   )
