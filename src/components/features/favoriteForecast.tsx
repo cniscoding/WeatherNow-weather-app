@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { roundTemperature } from '../../lib/utils';
+import { roundTemperature, celsiusToFahrenheit, fahrenheitToCelsius } from '../../lib/utils';
 
-export const FavoriteForecast: React.FC = () => {
+interface favoriteProp {
+  isCelsius: boolean;
+}
+export const FavoriteForecast: React.FC<favoriteProp> = ({isCelsius}) => {
   const [currentWeather, setCurrentWeather] = useState<any>(null);
-  const [isCelsius, setIsCelsius] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -12,7 +14,7 @@ export const FavoriteForecast: React.FC = () => {
     const fetchData = async () => {
       try {
         // Simulate delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 500));
         // Dummy data
         const dummyData = [
           {
@@ -139,8 +141,21 @@ export const FavoriteForecast: React.FC = () => {
                     )}
                   </div>
                   <div className="temperature flex items-center justify-center flex-col">
-                    <CardTitle >{roundTemperature(location.current.temp)} °{isCelsius ? 'C' : 'F'}</CardTitle>
-                    <CardDescription>Feels like {roundTemperature(location.current.feels_like)} °{isCelsius ? 'C' : 'F'}{'.'}</CardDescription>
+                    <CardTitle>
+                      {
+                        isCelsius
+                          ? `${roundTemperature(location.current.temp)} °C` // Display Celsius temperature
+                          : `${roundTemperature(celsiusToFahrenheit(location.current.temp))} °F` // Convert and display Fahrenheit temperature
+                      }
+                    </CardTitle>
+
+                    <CardDescription>
+                      Feels like {
+                        isCelsius
+                          ? `${roundTemperature(location.current.feels_like)} °C` // Display Celsius temperature
+                          : `${roundTemperature(celsiusToFahrenheit(location.current.feels_like))} °F` // Convert and display Fahrenheit temperature
+                      }.
+                    </CardDescription>
                   </div>
                 </div>
               </div>

@@ -6,6 +6,14 @@ import { geolocationProvider } from "@/components/providers/geolocationProvider"
 
 const apiKey = process.env.OPENWEATHERMAP_API_KEY;
 
+export function celsiusToFahrenheit(celsius: number) {
+  return (celsius * 9/5) + 32;
+}
+
+export function fahrenheitToCelsius(fahrenheit: number) {
+  return (fahrenheit - 32) * 5/9;
+}
+
 export function getDayOfWeek(timestamp: number) {
 
   const milliseconds = timestamp * 1000;
