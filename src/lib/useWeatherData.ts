@@ -42,13 +42,11 @@ const useWeatherData = () => {
       navigator.geolocation.getCurrentPosition(
         (success) => {
           const { latitude, longitude } = success.coords;
-          console.log('Geolocation success. Latitude:', latitude, 'Longitude:', longitude);
           resolve({ latitude, longitude });
         },
         (error) => {
           const defaultLat = 49.2827;
           const defaultLong = -123.1207;
-          console.log('Using default coordinates. Latitude:', defaultLat, 'Longitude:', defaultLong);
           resolve({ latitude: defaultLat, longitude: defaultLong });
         }
       );
