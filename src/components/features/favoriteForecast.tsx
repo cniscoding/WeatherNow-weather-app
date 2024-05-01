@@ -49,7 +49,7 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({ isCelsius, }) => {
             }
           },
           {
-            location: "Las Vegas, NV",
+            location: "Las Vegas",
             coordinates: {
               latitude: 36.188110,
               longitude: -115.176468
@@ -131,30 +131,30 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({ isCelsius, }) => {
   // Render actual content when data is loaded
   return (
     <Card className="w-full flex flex-col p-4 shadow-md">
-      <CardTitle className="">Favorites</CardTitle>
+      <CardTitle className="text-center md:text-left">Favorites</CardTitle>
       <div className="">
         {currentWeather.map((location: Location, index: number) => (
-          <div className="rounded-xl flex flex-col m-2 shadow-lg" key={index}>
+          <div className="rounded-xl flex flex-row m-2 shadow-lg" key={index}>
             <CardHeader className="flex flex-col justify-center items-center p-1">
-              <CardTitle>{location.location}</CardTitle>
-              <CardDescription><p>{location.current.weather[0].description}</p></CardDescription>
+              <CardTitle className="text-center">{location.location}</CardTitle>
+              <CardDescription className="text-center tracking-tight"><p>{location.current.weather[0].description}</p></CardDescription>
             </CardHeader>
-            <CardContent className="flex-grow">
+            <CardContent className="flex-grow w-full">
               <div className="flex flex-col justify-center items-center">
-                <div className="flex flex-col">
-                  <div>
-                    {location.current.weather[0].icon && (
-                      // <img
-                      <Image
-                        alt={location.current.weather[0].description}
-                        src={`https://openweathermap.org/img/wn/${location.current.weather[0].icon}@2x.png`}
-                        className="select-none"
-                        width={100}
-                        height={100}
-                      />
-                    )}
-                  </div>
-                  <div className="temperature flex items-center justify-center flex-col">
+                <div className="flex relative">
+                  {/* <div> */}
+                  {location.current.weather[0].icon && (
+                    // <img
+                    <Image
+                      alt={location.current.weather[0].description}
+                      src={`https://openweathermap.org/img/wn/${location.current.weather[0].icon}@2x.png`}
+                      className="select-none"
+                      width={85}
+                      height={100}
+                    />
+                  )}
+                  {/* </div> */}
+                  <div className="tracking-tight temperature flex items-center justify-center flex-col">
                     <CardTitle>
                       {
                         isCelsius
@@ -163,7 +163,7 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({ isCelsius, }) => {
                       }
                     </CardTitle>
 
-                    <CardDescription>
+                    <CardDescription className="tracking-tight">
                       Feels like {
                         isCelsius
                           ? `${roundTemperature(location.current.feels_like)} °C`

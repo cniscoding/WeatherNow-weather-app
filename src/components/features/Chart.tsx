@@ -77,8 +77,11 @@ const ChartComponent: React.FC<ChartComponentProps> = ({ currentWeather, isCelsi
   }, [currentWeather, isCelsius]);
 
   return (
-    <div className="mt-1 p-2 rounded-xl shadow-md">
-      <CardTitle className="">24 Hour Temperature Forecast</CardTitle>
+    <div className="mt-1 p-2 rounded-xl shadow-md ">
+      <CardTitle className="text-center md:text-left">
+        <span className="hidden md:inline">24 Hour Temperature Forecast</span>
+        <span className="inline md:hidden">24 Hour Temperature</span>
+      </CardTitle>
       <div>
         <canvas id="myChart"></canvas>
       </div>

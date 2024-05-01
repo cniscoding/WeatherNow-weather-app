@@ -4,10 +4,10 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card"
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ExpandForecastLoadingSkeleton from '@/components/features/expandLoadingSkeleton'
 import Image from 'next/image';
-import { getWeatherData } from '@/lib/getWeatherData'
+
 
 interface ExpandForecastProps {
   isCelsius: boolean;
@@ -38,74 +38,14 @@ interface Temp {
 }
 
 const ExpandForecast: React.FC<ExpandForecastProps> = ({ isCelsius, currentWeather, loading}) => {
-  // const [currentWeather, setCurrentWeather] = useState<any>(null);
-  // const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const searchParams = new URLSearchParams(window.location.search);
-  //       const searchLat = searchParams.get('Latitude');
-  //       const searchLong = searchParams.get('Longitude');
-  //       let latitude: number;
-  //       let longitude: number;
-
-  //       // Check if search params are available
-  //       if (searchLat && searchLong) {
-  //         latitude = parseFloat(searchLat);
-  //         longitude = parseFloat(searchLong);
-  //       } else {
-  //         // const { latitude: geoLat, longitude: geoLong } = await getGeolocation();
-  //         // latitude = geoLat;
-  //         // longitude = geoLong;
-  //         const geoLocation = await getGeolocation();
-  //         latitude = (geoLocation as { latitude: number }).latitude;
-  //         longitude = (geoLocation as { longitude: number }).longitude;
-  //       }
-
-  //       // Get weather data based on geolocation
-  //       const { props: { currentWeather } } = await getWeatherData(latitude, longitude);
-  //       console.log('Weather data:', currentWeather);
-
-  //       // Update state with weather data
-  //       setCurrentWeather(currentWeather);
-  //       setLoading(false)
-  //     } catch (error) {
-  //       console.error('Error fetching weather data:', error);
-  //       setLoading(false)
-  //     }
-  //   }
-  //   fetchData();
-  // }, []);
-
-  // async function getGeolocation() {
-  //   return new Promise((resolve, reject) => {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (success) => {
-  //         const { latitude, longitude } = success.coords;
-  //         console.log('Geolocation success. Latitude:', latitude, 'Longitude:', longitude);
-  //         resolve({ latitude, longitude });
-  //       },
-  //       (error) => {
-  //         const defaultLat = 49.2827;
-  //         const defaultLong = -123.1207;
-  //         console.log('Using default coordinates. Latitude:', defaultLat, 'Longitude:', defaultLong);
-  //         resolve({ latitude: defaultLat, longitude: defaultLong });
-  //       }
-  //     );
-  //   });
-  // }
   if (loading || !currentWeather) {
     return <ExpandForecastLoadingSkeleton />;
   }
 
-  // if (!currentWeather) {
-  //   return null;
-  // }
-
   return (
     <div className="rounded-xl p-4 shadow-2xl">
-      <CardTitle className="">5 Day Forecast</CardTitle>
+      <CardTitle className="text-center md:text-left">5 Day Forecast</CardTitle>
       <div className="pt-2 forecast-container grid grid-cols-6 gap-2">
         <div className="">
 
@@ -115,8 +55,8 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ isCelsius, currentWeath
           <div key={index} className={`border-2 rounded-xl p-1`}>
             <div className="flex flex-col h-full justify-between">
               <div className="">
-                <CardTitle className='text-sm md:text-lg truncate'>{getDayOfWeek(day.dt)}</CardTitle>
-                <CardDescription className='text-[0.65rem] sm:text-sm'>{day.summary}</CardDescription>
+                <CardTitle className='tracking-tight text-xs md:text-lg truncate'>{getDayOfWeek(day.dt)}</CardTitle>
+                <CardDescription className='tracking-tight hidden md:flex text-[0.65rem] sm:text-sm'>{day.summary}</CardDescription>
               </div>
               <div className={`relative invert-0 dark:invert-100`}>
                 {day.weather[0].icon && (
@@ -137,8 +77,8 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ isCelsius, currentWeath
         <ul className="flex flex-col items-end justify-center">
           <li className="truncate sm:w-auto flex h-full justify-end text-xs md:text-sm items-center">Low </li>
           <li className="truncate bg-gray-200 h-full w-full flex justify-end dark:bg-gray-800 text-xs md:text-sm items-center">High</li>
-          <li className="truncate sm:w-auto flex h-full justify-end text-xs md:text-sm items-center">Feels Day</li>
-          <li className="truncate bg-gray-200 h-full w-full flex justify-end dark:bg-gray-800 text-xs md:text-sm items-center">Feels Night</li>
+          <li className="truncate sm:w-auto flex h-full justify-end text-xs md:text-sm items-center">Day</li>
+          <li className="truncate bg-gray-200 h-full w-full flex justify-end dark:bg-gray-800 text-xs md:text-sm items-center">Night</li>
         </ul>
 
         {/* Bottom container */}
