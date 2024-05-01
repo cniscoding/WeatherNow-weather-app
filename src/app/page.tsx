@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import MainForecast from '../components/features/mainForecast';
 import ExpandForecast from '../components/features/expandForecast';
 import NavBar from '../components/features/navBar'
@@ -27,6 +27,7 @@ export default function Home() {
 
  
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <ThemeProvider
       attribute="class"
       defaultTheme="system"
@@ -67,6 +68,7 @@ export default function Home() {
         </div>
       </main>
     </ThemeProvider>
+    </Suspense>
   );
 };
 

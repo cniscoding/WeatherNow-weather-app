@@ -76,6 +76,7 @@ const SearchBox = () => {
   };
 
   return (
+    
     <div className="relative w-full text-black flex items-center">
       <Input
         className="text-black m-2 border-2 border-[black] dark:border-[white] w-[85%]"
