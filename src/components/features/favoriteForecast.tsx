@@ -19,7 +19,7 @@ interface Location {
   };
 }
 
-export const FavoriteForecast: React.FC<favoriteProp> = ({ isCelsius }) => {
+export const FavoriteForecast: React.FC<favoriteProp> = ({ isCelsius, }) => {
   const [currentWeather, setCurrentWeather] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
 

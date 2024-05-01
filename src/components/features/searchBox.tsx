@@ -1,9 +1,7 @@
-'use client'
-
 import { useState } from 'react';
-import { Input } from "@/components/ui/input"
-import { searchLocation } from "@/app/api/searchLocation"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+import { searchLocation } from "@/app/api/searchLocation";
+import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from 'next/navigation';
 
 interface Location {
@@ -16,15 +14,14 @@ interface Location {
 
 const SearchBox = () => {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<Location[]>([]);
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
   const navigation = useRouter();
   const searchParams = useSearchParams();
-  const [isInputFocused, setIsInputFocused] = useState(false);
 
-
-  const handleSearchClick = async () => {
+  const handleSearch = async () => {
     try {
       setLoading(true);
       if (query.trim() !== '') {
@@ -47,14 +44,11 @@ const SearchBox = () => {
     setQuery(e.target.value);
   };
 
-  const handleItemClick = (lon:number, lat:number) => {
+  const handleItemClick = (lon: number, lat: number) => {
     let searchString = `?Longitude=${lon}&Latitude=${lat}`;
     navigation.push(`/${searchString}`);
-    const searchLat = searchParams.get('Latitude')
-    const searchLong = searchParams.get('Longitude')
     const newUrl = window.location.origin + '/' + searchString;
     window.location.href = newUrl;
-
   };
 
   const renderSuggestions = () => {
@@ -62,17 +56,13 @@ const SearchBox = () => {
       return <li>No results found</li>;
     }
 
-    return results.map((result : Location, index:number) => (
+    return results.map((result, index) => (
       <li key={index} onClick={() => handleItemClick(result.lon, result.lat)}>
         {result.name || ''}{result.name && (result.state || result.country) && ', '}
         {result.state || ''}{result.state && result.country && ', '}
         {result.country || ''}
       </li>
     ));
-  };
-
-  const handleSearch = (e :  React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
   };
 
   const handleInputFocus = () => {
@@ -86,31 +76,29 @@ const SearchBox = () => {
   };
 
   return (
-      <form onSubmit={handleSearch} className="relative w-full text-black flex items-center">
-        <Input
-          className="text-black m-2 border-2 border-[black] dark:border-[white] w-[85%]"
-          type="text"
-          placeholder="Search City"
-          value={query}
-          onChange={handleInput}
-          onFocus={handleInputFocus}
-          onBlur={handleInputBlur}
-        />
-        <Button onClick={handleSearchClick} disabled={loading} className="" onBlur={handleInputBlur}>
-          {loading ? 'Searching...' : 'Search'}
-        </Button>
+    <div className="relative w-full text-black flex items-center">
+      <Input
+        className="text-black m-2 border-2 border-[black] dark:border-[white] w-[85%]"
+        type="text"
+        placeholder="Search City"
+        value={query}
+        onChange={handleInput}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
+      />
+      <Button onClick={handleSearch} disabled={loading} className="" onBlur={handleInputBlur}>
+        {loading ? 'Searching...' : 'Search'}
+      </Button>
 
-        {(status === 'OK' || isInputFocused) && (
-          <div
-            className="absolute top-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 w-full p-1"
-          >
-            <p className="bg-green-200 font-bold">Search Results</p>
-            <ul className="">
-              {renderSuggestions()}
-            </ul>
-          </div>
-        )}
-      </form>
+      {(status === 'OK' || isInputFocused) && (
+        <div className="absolute top-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10 w-full p-1">
+          <p className="bg-green-200 font-bold">Search Results</p>
+          <ul className="">
+            {renderSuggestions()}
+          </ul>
+        </div>
+      )}
+    </div>
   );
 };
 

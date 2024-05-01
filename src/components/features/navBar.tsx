@@ -10,7 +10,7 @@ const navBar: React.FC<navBarProps> = ({ }) => {
   return (
 
       // <nav className="text-black py-1 md:py-2 px-6 flex justify-between items-center flex-col rounded-xl shadow-md">
-        <div className="">
+        <div className="w-full z-10 h-full">
           <SearchBox />
         </div>
         // <div className="flex space-x-4">

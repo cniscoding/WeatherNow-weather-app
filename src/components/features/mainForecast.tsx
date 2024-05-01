@@ -6,77 +6,77 @@ import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/ca
 import Image from 'next/image';
 import ChartComponent from '@/components/features/Chart';
 import MainLoadingSkeleton from '@/components/features/mainLoadingSkeleton';
+import useWeatherData from '@/lib/useWeatherData';
 
 interface MainForecastProps {
   // currentWeather: any; 
   isCelsius: boolean;
+  currentWeather: any;
+  loading: boolean;
 }
 
-const MainForecast: React.FC<MainForecastProps> = ({ isCelsius }) => {
-  const [currentWeather, setCurrentWeather] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+const MainForecast: React.FC<MainForecastProps> = ({ isCelsius, currentWeather, loading }) => {
+  // const [currentWeather, setCurrentWeather] = useState<any>(null);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const searchParams = new URLSearchParams(window.location.search);
-        const searchLat = searchParams.get('Latitude');
-        const searchLong = searchParams.get('Longitude');
-        let latitude, longitude;
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const searchParams = new URLSearchParams(window.location.search);
+  //       const searchLat = searchParams.get('Latitude');
+  //       const searchLong = searchParams.get('Longitude');
+  //       let latitude, longitude;
 
-        // Check if search params are available
-        if (searchLat && searchLong) {
-          latitude = parseFloat(searchLat);
-          longitude = parseFloat(searchLong);
-        } else {
-          // const { latitude: geoLat, longitude: geoLong } = await getGeolocation();
-          // latitude = geoLat;
-          // longitude = geoLong;
-          const geoLocation = await getGeolocation();
-          latitude = (geoLocation as { latitude: number }).latitude;
-          longitude = (geoLocation as { longitude: number }).longitude;
-        }
+  //       if (searchLat && searchLong) {
+  //         latitude = parseFloat(searchLat);
+  //         longitude = parseFloat(searchLong);
+  //       } else {
+  //         const geoLocation = await getGeolocation();
+  //         latitude = (geoLocation as { latitude: number }).latitude;
+  //         longitude = (geoLocation as { longitude: number }).longitude;
+  //       }
 
-        // Get weather data based on geolocation
-        const { props: { currentWeather } } = await getWeatherData(latitude, longitude);
-        console.log('Weather data:', currentWeather);
+  //       // Get weather data based on geolocation
+  //       const { props: { currentWeather } } = await getWeatherData(latitude, longitude);
+  //       console.log('Weather data:', currentWeather);
 
-        // Update state with weather data
-        setCurrentWeather(currentWeather);
-        setLoading(false)
-      } catch (error) {
-        console.error('Error fetching weather data:', error);
-        setLoading(false)
-      }
-    }
-    fetchData();
-  }, []); // Empty dependency array ensures this effect runs only once on component mount
+  //       // Update state with weather data
+  //       setCurrentWeather(currentWeather);
+  //       setLoading(false)
+  //     } catch (error) {
+  //       console.error('Error fetching weather data:', error);
+  //       setLoading(false)
+  //     }
+  //   }
+  //   fetchData();
+  // }, []); // Empty dependency array ensures this effect runs only once on component mount
 
-  async function getGeolocation() {
-    return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(
-        (success) => {
-          const { latitude, longitude } = success.coords;
-          console.log('Geolocation success. Latitude:', latitude, 'Longitude:', longitude);
-          resolve({ latitude, longitude });
-        },
-        (error) => {
-          const defaultLat = 49.2827;
-          const defaultLong = -123.1207;
-          console.log('Using default coordinates. Latitude:', defaultLat, 'Longitude:', defaultLong);
-          resolve({ latitude: defaultLat, longitude: defaultLong });
-        }
-      );
-    });
-  }
+  // async function getGeolocation() {
+  //   return new Promise((resolve, reject) => {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (success) => {
+  //         const { latitude, longitude } = success.coords;
+  //         console.log('Geolocation success. Latitude:', latitude, 'Longitude:', longitude);
+  //         resolve({ latitude, longitude });
+  //       },
+  //       (error) => {
+  //         const defaultLat = 49.2827;
+  //         const defaultLong = -123.1207;
+  //         console.log('Using default coordinates. Latitude:', defaultLat, 'Longitude:', defaultLong);
+  //         resolve({ latitude: defaultLat, longitude: defaultLong });
+  //       }
+  //     );
+  //   });
+  // }
 
   if (loading || !currentWeather) {
     return <MainLoadingSkeleton />; 
   }
 
-  if (!currentWeather) {
-    return null; //
-  }
+  // if (!currentWeather) {
+  //   return null; //
+  // }
+
 
   return (
     <Card className="main-forecast w-full flex flex-col p-2 shadow-2xl">
