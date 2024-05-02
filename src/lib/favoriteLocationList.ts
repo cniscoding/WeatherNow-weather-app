@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 export interface Coordinates {
   latitude: number;
   longitude: number;

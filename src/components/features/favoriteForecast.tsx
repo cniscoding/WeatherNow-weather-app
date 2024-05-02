@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { roundTemperature, celsiusToFahrenheit } from '../../lib/utils';
 import Image from 'next/image';
 import { MdCancel } from "react-icons/md";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 interface favoriteProp {
   isCelsius: boolean;
@@ -13,7 +13,7 @@ interface favoriteProp {
 }
 
 interface Location {
-  location: string ;
+  location: string;
   current: {
     weather: {
       icon: string;
@@ -24,9 +24,9 @@ interface Location {
   };
 }
 
-export const FavoriteForecast: React.FC<favoriteProp> = ({ addFavoriteLocation,removeFavoriteLocation, isCelsius, favoriteLocationData }) => {
-  const [currentWeather, setCurrentWeather] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+export const FavoriteForecast: React.FC<favoriteProp> = ({ addFavoriteLocation, removeFavoriteLocation, isCelsius, favoriteLocationData }) => {
+  // const [currentWeather, setCurrentWeather] = useState<any>(null);
+  // const [loading, setLoading] = useState<boolean>(true);
   const navigation = useRouter();
 
 
@@ -71,26 +71,14 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({ addFavoriteLocation,r
   // };
 
   const handleFavoriteToggle = (location: any) => {
-    // Check if the location is already a favorite
-    console.log(favoriteLocationData.includes(location), 'if favoriteLocationData.includes(location)')
     if (favoriteLocationData.includes(location)) {
-      // If it's already a favorite, remove it
-
-      console.log('location.',location)
       removeFavoriteLocation(location);
-      console.log('location remove', location)
-      console.log('faovriteforecast remove location' )
     } else {
-      // If it's not a favorite, add it
-      console.log('faovriteforecast addfav location' )
-      
       addFavoriteLocation(location);
     }
   };
-  
-  // if (loading) {
-    if (!favoriteLocationData || favoriteLocationData.length === 0) {
-    // Render loading skeleton
+
+  if (!favoriteLocationData) {
     return (
       <Card className="w-full flex flex-col p-4 shadow-md">
         <CardTitle className="animate-pulse">Favorites</CardTitle>
@@ -117,25 +105,38 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({ addFavoriteLocation,r
     );
   }
 
-  // Render actual content when data is loaded
+  if (favoriteLocationData.length === 0) {
+    return (
+      <Card className="w-full flex flex-col p-4 shadow-md">
+        <CardTitle className="">Favorites</CardTitle>
+
+        <CardHeader className="flex flex-col justify-center items-center p-1">
+          <CardTitle className="text-center"></CardTitle>
+          <CardDescription className="text-center tracking-tight">You currently have no favorites.</CardDescription>
+        </CardHeader>
+
+      </Card>
+    );
+  }
+
   return (
-    <Card className="w-full flex flex-col p-4 shadow-md">
+    <Card className="w-full flex flex-col p-3 shadow-md">
       <CardTitle className="text-center md:text-left">Favorites</CardTitle>
       <div className="">
-        {favoriteLocationData.map((location: Location, index: number) => (
-          <div>
-            <div className="flex justify-end">
-              <span className="inline-block cursor-pointer">
+        {favoriteLocationData.slice(0, 6).map((location: Location, index: number) => (
+          <div className=''>
+            <div className="flex justify-end relative">
+              <span className="inline-block cursor-pointer absolute top-0 right-0">
                 <MdCancel
                   onClick={() => handleFavoriteToggle(location)}
-                  className="text-black hover:text-red-500 transition-colors duration-300 text-3xl"
+                  className="text-red-400 hover:text-red-900 transition-colors duration-300 text-3xl"
                 />
               </span>
             </div>
-            <div className="cursor-pointer rounded-xl flex flex-row m-2 shadow-lg" key={index} onClick={() => handleItemClick(location.coordinates.latitude, location.coordinates.longitude)}>
+            <div className="cursor-pointer rounded-xl flex flex-row my-2 shadow-lg" key={index} onClick={() => handleItemClick(location.coordinates.latitude, location.coordinates.longitude)}>
               <CardHeader className="flex flex-col justify-center items-center p-1">
                 <CardTitle className="text-center">{location.location}</CardTitle>
-                <CardDescription className="text-center tracking-tight"><p>{location.current.weather[0].description}</p></CardDescription>
+                <CardDescription className="text-center tracking-tight">{location.current.weather[0].description}</CardDescription>
               </CardHeader>
               <CardContent className="flex-grow w-full">
                 <div className="flex flex-col justify-center items-center">
@@ -177,6 +178,9 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({ addFavoriteLocation,r
           </div>
 
         ))}
+        {favoriteLocationData.length > 6 && (
+          <div className="text-center">+{favoriteLocationData.length - 6} more</div>
+        )}
       </div>
     </Card>
   );

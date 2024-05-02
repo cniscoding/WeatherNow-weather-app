@@ -6,6 +6,7 @@ import Image from 'next/image';
 import ChartComponent from '@/components/features/Chart';
 import MainLoadingSkeleton from '@/components/features/mainLoadingSkeleton';
 import { MdCancel } from "react-icons/md";
+import { IoAddCircle } from "react-icons/io5";
 
 interface MainForecastProps {
   isCelsius: boolean;
@@ -68,9 +69,9 @@ const MainForecast: React.FC<MainForecastProps> = ({ favoriteLocationData, addFa
       </CardDescription>
       <div className="flex justify-end">
         <span className="inline-block cursor-pointer">
-          <MdCancel
+            <IoAddCircle
             onClick={() => handleFavoriteToggle(location)}
-            className="text-black hover:text-red-500 transition-colors duration-300 text-3xl"
+            className="text-blue-400 hover:text-blue-900 transition-colors duration-300 text-3xl"
           />
         </span>
       </div>

@@ -21,21 +21,14 @@ interface FavoriteForecast {
 export default function Home() {
   const [isCelsius, setIsCelsius] = useState(true);
   const { currentWeather, loading } = useWeatherData();
-  // const { favoriteLocationData } = useFavoriteLocations();
   const [favoriteLocations, setFavoriteLocations] = useState<typeof useFavoriteLocations>(useFavoriteLocations);
 
-  // Function to add a new favorite location
   const addFavoriteLocation = (newLocation: string) => {
     setFavoriteLocations(prev => [...prev, newLocation]);
   };
 
-  // Function to remove a favorite location
   const removeFavoriteLocation = (locationToRemove: string) => {
-    // setFavoriteLocations(favoriteLocations.filter(location => location !== locationToRemove));
     setFavoriteLocations(prev => prev.filter(item => item !== locationToRemove))
-    // setFavoriteLocations(favoriteLocations.filter(location => location.location !== locationToRemove));
-    // setFavoriteLocations([locationToRemove])
-    console.log('removeFavoriteLocation Function run')
   };
 
   const toggleTemperatureUnit = () => {
