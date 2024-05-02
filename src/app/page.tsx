@@ -10,6 +10,8 @@ import { ThemeSwitcher } from '@/components/features/ThemeSwitcher'
 import { TemperatureToggle } from '@/components/features/ temperatureToggle'
 import useWeatherData from '@/lib/useWeatherData';
 import { useFavoriteLocations } from '@/lib/favoriteLocationList';
+import { getWeatherData } from '@/lib/getWeatherData'
+import { Lateef } from 'next/font/google';
 
 interface ExpandForecast {
   isCelsius: boolean;
@@ -20,8 +22,15 @@ interface FavoriteForecast {
 }
 export default function Home() {
   const [isCelsius, setIsCelsius] = useState(true);
-  const { currentWeather, loading } = useWeatherData();
+  const { currentWeather, updateCurrentWeather, loading } = useWeatherData();
+  // const {loading} = useWeatherData()
+  // const { currentWeather, setCurrentWeather } = useWeatherData();
   const [favoriteLocations, setFavoriteLocations] = useState<typeof useFavoriteLocations>(useFavoriteLocations);
+
+  const currentWeatherReset = (lat:number, lon:number) => {
+    // setCurrentWeather(getWeatherData(lat,lon))
+    updateCurrentWeather(lat, lon)
+  }
 
   const addFavoriteLocation = (newLocation: string) => {
     setFavoriteLocations(prev => [...prev, newLocation]);
@@ -66,10 +75,11 @@ export default function Home() {
                     addFavoriteLocation={addFavoriteLocation}
                     removeFavoriteLocation={removeFavoriteLocation}
                     currentWeather={currentWeather}
-                    loading={loading} />
+                    loading={loading}
+                     />
                 </div>
                 <div className="pb-4 ">
-                  <ExpandForecast isCelsius={isCelsius} currentWeather={currentWeather} loading={loading} />
+                  <ExpandForecast isCelsius={isCelsius} currentWeather={currentWeather}  loading={loading} />
                 </div>
               </div>
 
@@ -80,6 +90,7 @@ export default function Home() {
                     favoriteLocationData={favoriteLocations}
                     addFavoriteLocation={addFavoriteLocation}
                     removeFavoriteLocation={removeFavoriteLocation}
+                    currentWeatherReset={currentWeatherReset}
                   />
                 </div>
               </div>

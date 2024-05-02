@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { roundTemperature, celsiusToFahrenheit } from '../../lib/utils';
 import Image from 'next/image';
 import { MdCancel } from "react-icons/md";
 import { useRouter } from 'next/navigation';
+import { getWeatherData } from '@/lib/getWeatherData'
+
 
 interface favoriteProp {
   isCelsius: boolean;
   favoriteLocationData: Location[];
   addFavoriteLocation: (location: string) => void;
   removeFavoriteLocation: (location: string) => void;
+  currentWeatherReset: any
 }
 
 interface Location {
@@ -24,17 +27,17 @@ interface Location {
   };
 }
 
-export const FavoriteForecast: React.FC<favoriteProp> = ({ addFavoriteLocation, removeFavoriteLocation, isCelsius, favoriteLocationData }) => {
-  // const [currentWeather, setCurrentWeather] = useState<any>(null);
-  // const [loading, setLoading] = useState<boolean>(true);
+export const FavoriteForecast: React.FC<favoriteProp> = ({currentWeatherReset, addFavoriteLocation, removeFavoriteLocation, isCelsius, favoriteLocationData }) => {
   const navigation = useRouter();
 
 
-  const handleItemClick = (lon: number, lat: number) => {
-    let searchString = `?Longitude=${lon}&Latitude=${lat}`;
+  const handleItemClick = (lat: number, lon: number) => {
+    let searchString = `?Latitude=${lat}&Longitude=${lon}`;
     navigation.push(`/${searchString}`);
-    const newUrl = window.location.origin + '/' + searchString;
-    window.location.href = newUrl;
+    // const newUrl = window.location.origin + '/' + searchString;
+    // window.location.href = newUrl;
+    // getWeatherData(lat,lon)
+    currentWeatherReset(lat,lon)
   };
 
   // useEffect(() => {

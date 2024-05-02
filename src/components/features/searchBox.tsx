@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { searchLocation } from "@/app/api/searchLocation";
 import { Button } from "@/components/ui/button";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 interface Location {
   name: string;
@@ -19,7 +19,6 @@ const SearchBox = () => {
   const [loading, setLoading] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const navigation = useRouter();
-  const searchParams = useSearchParams();
 
   const handleSearch = async () => {
     try {
@@ -45,7 +44,7 @@ const SearchBox = () => {
   };
 
   const handleItemClick = (lon: number, lat: number) => {
-    let searchString = `?Longitude=${lon}&Latitude=${lat}`;
+    let searchString = `?Latitude=${lat}&Longitude=${lon}`;
     navigation.push(`/${searchString}`);
     const newUrl = window.location.origin + '/' + searchString;
     window.location.href = newUrl;

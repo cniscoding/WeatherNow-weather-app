@@ -28,8 +28,8 @@ export const useFavoriteLocations =
     {
       location: "Mexico",
       coordinates: {
-        latitude: -99.1331785,
-        longitude: 19.4326296
+        latitude: 19.4326296,
+        longitude: -99.1331785
       },
       timezone: "America/Mexico",
       current: {
@@ -48,8 +48,8 @@ export const useFavoriteLocations =
     {
       location: "Tokyo",
       coordinates: {
-        latitude: 140.0419644,
-        longitude: 35.2524044
+        latitude: 35.6828387,
+        longitude: 139.7594549
       },
       timezone: "Tokyo",
       current: {
@@ -68,8 +68,8 @@ export const useFavoriteLocations =
     {
       location: "Toronto",
       coordinates: {
-        latitude: -79.3839347,
-        longitude: 43.6534817
+        latitude: 43.6534817,
+        longitude: -79.3839347
       },
       timezone: "Toronto",
       current: {
@@ -88,8 +88,8 @@ export const useFavoriteLocations =
     {
       location: "New York",
       coordinates: {
-        latitude: -74.3693157,
-        longitude: 40.3606638
+        latitude: 40.712728,
+        longitude: -74.0060152
       },
       timezone: "",
       current: {

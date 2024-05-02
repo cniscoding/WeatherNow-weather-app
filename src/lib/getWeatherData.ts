@@ -2,7 +2,7 @@
 
 import { getLocationData } from "@/lib/utils";
 
-export async function getWeatherData(lat: number, lon: number) {
+export async function getWeatherData(lat: number, lon: number,) {
   try {
     const currentWeather = await getLocationData(lat, lon);
     return { props: { currentWeather } };

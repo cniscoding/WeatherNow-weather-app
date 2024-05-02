@@ -5,7 +5,6 @@ import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/ca
 import Image from 'next/image';
 import ChartComponent from '@/components/features/Chart';
 import MainLoadingSkeleton from '@/components/features/mainLoadingSkeleton';
-import { MdCancel } from "react-icons/md";
 import { IoAddCircle } from "react-icons/io5";
 
 interface MainForecastProps {
@@ -18,17 +17,17 @@ interface MainForecastProps {
 }
 
 const MainForecast: React.FC<MainForecastProps> = ({ favoriteLocationData, addFavoriteLocation, removeFavoriteLocation, isCelsius, currentWeather, loading }) => {
-  if (loading || !currentWeather) {
+  if (!currentWeather) {
     return <MainLoadingSkeleton />;
   }
 
   const handleFavoriteToggle = (location: any) => {
 
-    const locationAdd = {
+    const addLocation = {
       location: currentWeather.timezone.split('/')[1].replace(/[_-]/g, ' '),
       coordinates: {
-        latitude: currentWeather.lat,
         longitude: currentWeather.lon,
+        latitude: currentWeather.lat,
       },
       timezone: currentWeather.timezone,
       current: {
@@ -45,13 +44,16 @@ const MainForecast: React.FC<MainForecastProps> = ({ favoriteLocationData, addFa
       }
     }
     if (favoriteLocationData.includes(location)) {
+      console.log(currentWeather,'currentWeat removeFavoriteLocationher')
       removeFavoriteLocation(location);
     } else {
-      // addFavoriteLocation(location);
-      addFavoriteLocation(locationAdd);
+      console.log(currentWeather,'currentWeathe addFavoriteLocationr')
+      addFavoriteLocation(addLocation);
+      
     }
   };
-  console.log(favoriteLocationData, 'favoriteLocationData main outside')
+
+  console.log(currentWeather,'currentWea outside ther')
   return (
     <Card className="main-forecast w-full flex flex-col p-2 shadow-2xl">
       <CardTitle className="flex justify-center md:justify-start">Current Weather</CardTitle>

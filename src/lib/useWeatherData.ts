@@ -52,8 +52,16 @@ const useWeatherData = () => {
       );
     });
   }
+  const updateCurrentWeather = async (lat: number, lon: number) => {
+    try {
+      const { props: { currentWeather } } = await getWeatherData(lat, lon);
+      setCurrentWeather(currentWeather);
+    } catch (error) {
+      console.error('Error updating weather data:', error);
+    }
+  };
 
-  return { currentWeather, loading };
+  return { currentWeather, loading, updateCurrentWeather };
 };
 
 export default useWeatherData;
