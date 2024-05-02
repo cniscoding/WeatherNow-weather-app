@@ -24,13 +24,10 @@ const useWeatherData = () => {
 
         // Get weather data based on geolocation
         const { props: { currentWeather } } = await getWeatherData(latitude, longitude);
-        console.log('Weather data:', currentWeather);
-
         // Update state with weather data
         setCurrentWeather(currentWeather);
         setLoading(false)
       } catch (error) {
-        console.error('Error fetching weather data:', error);
         setLoading(false)
       }
     }
@@ -57,7 +54,6 @@ const useWeatherData = () => {
       const { props: { currentWeather } } = await getWeatherData(lat, lon);
       setCurrentWeather(currentWeather);
     } catch (error) {
-      console.error('Error updating weather data:', error);
     }
   };
 

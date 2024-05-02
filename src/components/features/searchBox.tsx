@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Input } from "@/components/ui/input";
-import { searchLocation } from "@/app/api/searchLocation";
-import { Button } from "@/components/ui/button";
+import { useState, useRef, useEffect } from 'react';
+import { Input } from '@/components/ui/input';
+import { searchLocation } from '@/app/api/searchLocation';
+import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 
 interface Location {
@@ -12,13 +12,34 @@ interface Location {
   lat: number;
 }
 
-const SearchBox = () => {
+interface SearchBoxProps {
+  currentWeatherUpdate: (lat: number, lon: number) => void;
+}
+
+const SearchBox: React.FC<SearchBoxProps> = ({ currentWeatherUpdate }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Location[]>([]);
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const navigation = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+        setResults([]);
+        setIsInputFocused(false);
+        setQuery('')
+        setStatus('saf')
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [inputRef, query]);
 
   const handleSearch = async () => {
     try {
@@ -32,7 +53,6 @@ const SearchBox = () => {
         setStatus('');
       }
     } catch (error) {
-      console.error('Error fetching search results:', error);
       setStatus('Error');
     } finally {
       setLoading(false);
@@ -43,11 +63,14 @@ const SearchBox = () => {
     setQuery(e.target.value);
   };
 
-  const handleItemClick = (lon: number, lat: number) => {
+  const handleItemClick = (lat: number, lon: number) => {
     let searchString = `?Latitude=${lat}&Longitude=${lon}`;
     navigation.push(`/${searchString}`);
-    const newUrl = window.location.origin + '/' + searchString;
-    window.location.href = newUrl;
+    currentWeatherUpdate(lat, lon);
+    setStatus('');
+    setIsInputFocused(false);
+    setResults([]);
+    setQuery('');
   };
 
   const renderSuggestions = () => {
@@ -56,9 +79,9 @@ const SearchBox = () => {
     }
 
     return results.map((result, index) => (
-      <li key={index} onClick={() => handleItemClick(result.lon, result.lat)}>
-        {result.name || ''}{result.name && (result.state || result.country) && ', '}
-        {result.state || ''}{result.state && result.country && ', '}
+      <li className="" key={index} onClick={() => handleItemClick(result.lat, result.lon)}>
+        {result.name || ''} {result.state && (result.name && result.state) && ', '}
+        {result.state || ''} {result.country && (result.state && result.country) && ', '}
         {result.country || ''}
       </li>
     ));
@@ -71,14 +94,13 @@ const SearchBox = () => {
   const handleInputBlur = () => {
     setIsInputFocused(false);
     setResults([]);
-    setStatus('NotOK');
   };
 
   return (
-    
-    <div className="relative w-full text-black flex items-center">
+    <div className="relative w-full text-black flex items-center" ref={inputRef}>
       <Input
-        className="text-black m-2 border-2 border-[black] dark:border-[white] w-[85%]"
+
+        className="text-black m-2 border-2 border-black dark:border-white w-[85%]"
         type="text"
         placeholder="Search City"
         value={query}

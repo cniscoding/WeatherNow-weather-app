@@ -66,6 +66,7 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ isCelsius, currentWeath
                     className="select-none"
                     width={300}
                     height={200}
+                    priority={true}
                   />
                 )}
               </div>

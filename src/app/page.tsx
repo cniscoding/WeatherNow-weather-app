@@ -10,8 +10,7 @@ import { ThemeSwitcher } from '@/components/features/ThemeSwitcher'
 import { TemperatureToggle } from '@/components/features/ temperatureToggle'
 import useWeatherData from '@/lib/useWeatherData';
 import { useFavoriteLocations } from '@/lib/favoriteLocationList';
-import { getWeatherData } from '@/lib/getWeatherData'
-import { Lateef } from 'next/font/google';
+import SearchBox from '@/components/features/searchBox'
 
 interface ExpandForecast {
   isCelsius: boolean;
@@ -20,31 +19,47 @@ interface ExpandForecast {
 interface FavoriteForecast {
   isCelsius: boolean;
 }
+
+interface Location {
+  location: string;
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  timezone: string;
+  current: {
+    temp: number;
+    feels_like: number;
+    weather: {
+      id: number;
+      main: string;
+      description: string;
+      icon: string;
+    }[];
+  };
+}
+
 export default function Home() {
   const [isCelsius, setIsCelsius] = useState(true);
   const { currentWeather, updateCurrentWeather, loading } = useWeatherData();
-  // const {loading} = useWeatherData()
-  // const { currentWeather, setCurrentWeather } = useWeatherData();
   const [favoriteLocations, setFavoriteLocations] = useState<typeof useFavoriteLocations>(useFavoriteLocations);
 
-  const currentWeatherReset = (lat:number, lon:number) => {
+  const currentWeatherUpdate = (lat:number, lon:number) => {
     // setCurrentWeather(getWeatherData(lat,lon))
     updateCurrentWeather(lat, lon)
   }
 
-  const addFavoriteLocation = (newLocation: string) => {
+  const addFavoriteLocation = (newLocation: Location) => {
     setFavoriteLocations(prev => [...prev, newLocation]);
   };
 
-  const removeFavoriteLocation = (locationToRemove: string) => {
+  const removeFavoriteLocation = (locationToRemove: Location) => {
     setFavoriteLocations(prev => prev.filter(item => item !== locationToRemove))
   };
 
   const toggleTemperatureUnit = () => {
     setIsCelsius((prev) => !prev);
   };
-
-  console.log(useFavoriteLocations)
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -61,7 +76,8 @@ export default function Home() {
               <TemperatureToggle onChange={toggleTemperatureUnit} />
             </div>
             <div className="w-full z-10 h-full">
-              <NavBar />
+              <NavBar currentWeatherUpdate={currentWeatherUpdate}/>
+              {/* <SearchBox currentWeatherUpdate={currentWeatherUpdate}/> */}
             </div>
           </div>
 
@@ -88,9 +104,9 @@ export default function Home() {
                   <FavoriteForecast
                     isCelsius={isCelsius}
                     favoriteLocationData={favoriteLocations}
-                    addFavoriteLocation={addFavoriteLocation}
+                    // addFavoriteLocation={addFavoriteLocation}
                     removeFavoriteLocation={removeFavoriteLocation}
-                    currentWeatherReset={currentWeatherReset}
+                    currentWeatherUpdate={currentWeatherUpdate}
                   />
                 </div>
               </div>
@@ -99,8 +115,9 @@ export default function Home() {
               <FavoriteForecast
                 isCelsius={isCelsius}
                 favoriteLocationData={favoriteLocations}
-                addFavoriteLocation={addFavoriteLocation}
+                // addFavoriteLocation={addFavoriteLocation}
                 removeFavoriteLocation={removeFavoriteLocation}
+                currentWeatherUpdate={currentWeatherUpdate}
               />
             </div>
           </div>

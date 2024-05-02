@@ -10,13 +10,17 @@ import { getWeatherData } from '@/lib/getWeatherData'
 interface favoriteProp {
   isCelsius: boolean;
   favoriteLocationData: Location[];
-  addFavoriteLocation: (location: string) => void;
-  removeFavoriteLocation: (location: string) => void;
-  currentWeatherReset: any
+  // addFavoriteLocation: (newLocation: Location) => void;
+  removeFavoriteLocation: (locationToRemove: any) => void;
+  currentWeatherUpdate: any
 }
 
 interface Location {
   location: string;
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
   current: {
     weather: {
       icon: string;
@@ -27,7 +31,7 @@ interface Location {
   };
 }
 
-export const FavoriteForecast: React.FC<favoriteProp> = ({currentWeatherReset, addFavoriteLocation, removeFavoriteLocation, isCelsius, favoriteLocationData }) => {
+export const FavoriteForecast: React.FC<favoriteProp> = ({currentWeatherUpdate, removeFavoriteLocation, isCelsius, favoriteLocationData }) => {
   const navigation = useRouter();
 
 
@@ -37,7 +41,7 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({currentWeatherReset, a
     // const newUrl = window.location.origin + '/' + searchString;
     // window.location.href = newUrl;
     // getWeatherData(lat,lon)
-    currentWeatherReset(lat,lon)
+    currentWeatherUpdate(lat,lon)
   };
 
   // useEffect(() => {
@@ -77,7 +81,7 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({currentWeatherReset, a
     if (favoriteLocationData.includes(location)) {
       removeFavoriteLocation(location);
     } else {
-      addFavoriteLocation(location);
+      // addFavoriteLocation(location);
     }
   };
 
@@ -127,7 +131,7 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({currentWeatherReset, a
       <CardTitle className="text-center md:text-left">Favorites</CardTitle>
       <div className="">
         {favoriteLocationData.slice(0, 6).map((location: Location, index: number) => (
-          <div className=''>
+          <div key={index} className=''>
             <div className="flex justify-end relative">
               <span className="inline-block cursor-pointer absolute top-0 right-0">
                 <MdCancel
@@ -153,6 +157,7 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({currentWeatherReset, a
                         className="select-none"
                         width={85}
                         height={100}
+                        priority={true}
                       />
                     )}
                     {/* </div> */}

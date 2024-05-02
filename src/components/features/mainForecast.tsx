@@ -11,9 +11,28 @@ interface MainForecastProps {
   isCelsius: boolean;
   currentWeather: any;
   loading: boolean;
-  addFavoriteLocation: (location: string) => void;
-  removeFavoriteLocation: (location: string) => void;
+  addFavoriteLocation: (newLocation: Location) => void;
+  removeFavoriteLocation: (locationToRemove: Location) => void;
   favoriteLocationData: any;
+}
+
+interface Location {
+  location: string;
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  timezone: string;
+  current: {
+    temp: number;
+    feels_like: number;
+    weather: {
+      id: number;
+      main: string;
+      description: string;
+      icon: string;
+    }[];
+  };
 }
 
 const MainForecast: React.FC<MainForecastProps> = ({ favoriteLocationData, addFavoriteLocation, removeFavoriteLocation, isCelsius, currentWeather, loading }) => {
@@ -44,16 +63,13 @@ const MainForecast: React.FC<MainForecastProps> = ({ favoriteLocationData, addFa
       }
     }
     if (favoriteLocationData.includes(location)) {
-      console.log(currentWeather,'currentWeat removeFavoriteLocationher')
       removeFavoriteLocation(location);
     } else {
-      console.log(currentWeather,'currentWeathe addFavoriteLocationr')
       addFavoriteLocation(addLocation);
       
     }
   };
 
-  console.log(currentWeather,'currentWea outside ther')
   return (
     <Card className="main-forecast w-full flex flex-col p-2 shadow-2xl">
       <CardTitle className="flex justify-center md:justify-start">Current Weather</CardTitle>
@@ -101,6 +117,7 @@ const MainForecast: React.FC<MainForecastProps> = ({ favoriteLocationData, addFa
                       className="select-none"
                       width={85}
                       height={100}
+                      priority={true}
                     />
                   )}
                 </div>
