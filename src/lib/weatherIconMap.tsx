@@ -194,4 +194,24 @@ export const weatherIconMap: Record<string, string> = {
   "904n": "hot",
   "906n": "night-alt-hail",
   "957n": "strong-wind",
+
+  // 
+  "01n@2x": "01n@2x.png",
+  "02d@2x": "02d@2x.png",
+  "02n@2x": "02n@2x.png",
+  "01d@2x": "01d@2x.png",
+  "03d@2x": "03d@2x.png",
+  "03n@2x": "03n@2x.png",
+  "04d@2x": "04d@2x.png",
+  "04n@2x": "04n@2x.png",
+  "09d@2x": "09d@2x.png",
+  "09n@2x": "09n@2x.png",
+  "10d@2x": "10d@2x.png",
+  "10n@2x": "10n@2x.png",
+  "11d@2x": "11d@2x.png",
+  "11n@2x": "11n@2x.png",
+  "13d@2x": "13d@2x.png",
+  "13n@2x": "13n@2x.png",
+  "50d@2x": "50d@2x.png",
+  "50n@2x": "50n@2x.png"
 }

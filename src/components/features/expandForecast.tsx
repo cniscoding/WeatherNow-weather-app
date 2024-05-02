@@ -61,11 +61,12 @@ const ExpandForecast: React.FC<ExpandForecastProps> = ({ isCelsius, currentWeath
               <div className={`relative invert-0 dark:invert-100`}>
                 {day.weather[0].icon && (
                   <Image
-                    src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                    // src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+                    src={`/openWeatherIcons/${day.weather[0].icon}@2x.png`}
                     alt={day.summary}
                     className="select-none"
-                    width={300}
-                    height={200}
+                    width={85}
+                    height={85}
                     priority={true}
                   />
                 )}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { roundTemperature, celsiusToFahrenheit } from '../../lib/utils';
 import Image from 'next/image';
@@ -31,8 +31,9 @@ interface Location {
   };
 }
 
-export const FavoriteForecast: React.FC<favoriteProp> = ({currentWeatherUpdate, removeFavoriteLocation, isCelsius, favoriteLocationData }) => {
+export const FavoriteForecast: React.FC<favoriteProp> = ({ currentWeatherUpdate, removeFavoriteLocation, isCelsius, favoriteLocationData }) => {
   const navigation = useRouter();
+  const [loading, setLoading] = useState(true);
 
 
   const handleItemClick = (lat: number, lon: number) => {
@@ -41,24 +42,24 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({currentWeatherUpdate, 
     // const newUrl = window.location.origin + '/' + searchString;
     // window.location.href = newUrl;
     // getWeatherData(lat,lon)
-    currentWeatherUpdate(lat,lon)
+    currentWeatherUpdate(lat, lon)
   };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       await new Promise(resolve => setTimeout(resolve, 500));
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 500));
 
-  //       // setCurrentWeather(favoriteLocationData);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.error('Error fetching weather data:', error);
-  //       setLoading(false);
-  //     }
-  //   };
+        // setCurrentWeather(favoriteLocationData);
+        // setLoading(false);
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+        // setLoading(false);
+      }
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
 
   // const handleFavoriteToggle = (location: Location) => {
   //   const isFavorite = isLocationFavorite(location);
@@ -84,6 +85,43 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({currentWeatherUpdate, 
       // addFavoriteLocation(location);
     }
   };
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 700);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+
+  if (loading) {
+    return (
+      <Card className="w-full flex flex-col p-4 shadow-md">
+        <CardTitle className="animate-pulse">Favorites</CardTitle>
+        {[1, 2, 3].map((_, index) => (
+          <div className="rounded-xl flex flex-col m-2 shadow-lg" key={index}>
+            <CardHeader className="flex flex-col justify-center items-center p-1">
+              <div className="h-4 bg-gray-300 rounded w-3/4 mb-1 animate-pulse"></div>
+              <div className="h-4 bg-gray-300 rounded w-3/4 animate-pulse"></div>
+            </CardHeader>
+            <CardContent className="flex-grow">
+              <div className="flex flex-col justify-center items-center">
+                <div className="flex flex-col">
+                  <div className="h-16 w-16 bg-gray-300 rounded-full animate-pulse"></div>
+                  <div className="temperature flex items-center justify-center flex-col">
+                    <div className="h-6 bg-gray-300 rounded w-16 mb-1 animate-pulse"></div>
+                    <div className="h-4 bg-gray-300 rounded w-20 animate-pulse"></div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </div>
+        ))}
+      </Card>
+    );
+  }
 
   if (!favoriteLocationData) {
     return (
@@ -153,10 +191,11 @@ export const FavoriteForecast: React.FC<favoriteProp> = ({currentWeatherUpdate, 
                       // <img
                       <Image
                         alt={location.current.weather[0].description}
-                        src={`https://openweathermap.org/img/wn/${location.current.weather[0].icon}@2x.png`}
+                        // src={`https://openweathermap.org/img/wn/${location.current.weather[0].icon}@2x.png`}
+                        src={`/openWeatherIcons/${location.current.weather[0].icon}@2x.png`}
                         className="select-none"
                         width={85}
-                        height={100}
+                        height={85}
                         priority={true}
                       />
                     )}

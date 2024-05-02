@@ -6,6 +6,8 @@ import Image from 'next/image';
 import ChartComponent from '@/components/features/Chart';
 import MainLoadingSkeleton from '@/components/features/mainLoadingSkeleton';
 import { IoAddCircle } from "react-icons/io5";
+import { weatherIconMap } from "@/lib/weatherIconMap"
+
 
 interface MainForecastProps {
   isCelsius: boolean;
@@ -36,6 +38,7 @@ interface Location {
 }
 
 const MainForecast: React.FC<MainForecastProps> = ({ favoriteLocationData, addFavoriteLocation, removeFavoriteLocation, isCelsius, currentWeather, loading }) => {
+  
   if (!currentWeather) {
     return <MainLoadingSkeleton />;
   }
@@ -113,10 +116,12 @@ const MainForecast: React.FC<MainForecastProps> = ({ favoriteLocationData, addFa
                     // <img
                     <Image
                       alt={currentWeather.current.weather[0].description.toString()}
-                      src={`https://openweathermap.org/img/wn/${currentWeather.current.weather[0].icon}@2x.png`}
+                      // src={`https://openweathermap.org/img/wn/${currentWeather.current.weather[0].icon}@2x.png`}
+                      // src={`${currentWeather.current.weather[0].icon}.png`}
+                      src={`/openWeatherIcons/${currentWeather.current.weather[0].icon}@2x.png`}
                       className="select-none"
-                      width={85}
-                      height={100}
+                      width={150}
+                      height={150}
                       priority={true}
                     />
                   )}
