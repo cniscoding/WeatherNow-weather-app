@@ -17,7 +17,7 @@ Dark Mode
 ![Dark Mode](https://github.com/cniscoding/WeatherNow-weather-app/blob/main/public/WeatherNow_03.png)
 
 Mobile View
-![Member Chat](https://github.com/cniscoding/WeatherNow-weather-app/blob/main/public/WeatherNow_04.png)
+![Mobile View](https://github.com/cniscoding/WeatherNow-weather-app/blob/main/public/WeatherNow_04.png)
 
 
 ## Setup
